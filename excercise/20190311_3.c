@@ -3,7 +3,7 @@
 int main(void){
 	int max, min, a, b, c, tmp;
 	
-	printf("Input 5 integers : ");
+	printf("Input 5 integers: ");
 	
 	scanf("%d %d %d %d %d",&max ,&min ,&a ,&b ,&c);
 	
