@@ -1,13 +1,25 @@
 #include <stdio.h>
 
 int main(void){
-	int a, b, cnt, sum = 0;
-	printf("Enter twp omtegers : ");
+	int a, b, start, end, sum = 0;
+	
+	printf("Enter two integers : ");
 	scanf("%d %d", &a, &b);
-	cnt = a;
-	while(cnt<=b){
-		sum += cnt;
-		cnt++;
+	
+	if(a <= b){
+		start = a;
+		end = b;
 	}
+	
+	else{
+		start = b;
+		end = a;
+	}
+	
+	while(start <= end){
+		sum += start;
+		start++;
+	}
+	
 	printf("The sum of all integers between %d and %d is %d\n",a ,b ,sum);
 }
