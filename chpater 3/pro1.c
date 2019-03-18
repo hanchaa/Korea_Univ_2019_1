@@ -22,4 +22,6 @@ int main(void){
 	}
 	
 	printf("The sum of all integers between %d and %d is %d\n",a ,b ,sum);
+
+	return 0;
 }
