@@ -6,7 +6,7 @@ int main(void){
 	printf("Enter a 5-digit number: ");
 	scanf("%d", &a);
 	
-	if ( a < 0)
+	if ( a <= 0)
 		return 1;
 	if( a > 99999)
 		return 1;
