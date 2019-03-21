@@ -6,7 +6,6 @@ int main(void){
 	while(a < 0){
 		printf("Enter a positive integer: ");
 		scanf("%d", &a);
-		
 	}
 	
 	cnt = a;
