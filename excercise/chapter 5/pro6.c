@@ -13,7 +13,7 @@ int main(void){
 			printf("Wrong Input, Try again!\n\n");
 	}while(a <= 0 || b <= 0);
 	
-	printf("GCD pf %d and %d is %d.\n", a, b, gcd(a, b));
+	printf("GCD of %d and %d is %d.\n", a, b, gcd(a, b));
 	
 	return 0;
 }
