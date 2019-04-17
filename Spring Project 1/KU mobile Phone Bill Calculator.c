@@ -4,7 +4,7 @@
 
 void plan();
 void two_month(int plan, float feb[], float mar[]);
-void input();
+void input(float apr[]);
 void total();
 void recommend();
 
@@ -56,6 +56,7 @@ int main(void) {
 				break;
 			
 			case 3 :
+				input(apr);
 				break;
 			
 			case 4 :
@@ -140,4 +141,16 @@ void two_month(int plan, float feb[], float mar[]){
 		if(a == 'Y')
 			break;
 	}
+}
+
+void input(float apr[]){
+	printf("=================================\n");
+	printf("Input your usages of voice : ");
+	scanf("%f", &apr[0]);
+	
+	printf("Input your usages of text : ");
+	scanf("%f", &apr[1]);
+	
+	printf("Input your usages of data : ");
+	scanf("%f", &apr[2]);
 }
