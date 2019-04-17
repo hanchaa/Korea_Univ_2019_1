@@ -159,9 +159,9 @@ int input(int usage[3][3], int chk) {
 	float tmp;
 	char a;
 	
+	system("cls");
+	
 	if(chk == 0){
-		system("cls");
-
 		printf("=================================\n");
 		printf("Input your usages of voice : ");
 		scanf("%d", &usage[2][0]);
