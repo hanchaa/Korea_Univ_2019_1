@@ -3,7 +3,7 @@
 #include <time.h>
 
 void plan();
-void two_month();
+void two_month(int plan, float feb[], float mar[]);
 void input();
 void total();
 void recommend();
@@ -52,6 +52,7 @@ int main(void) {
 				break;
 			
 			case 2 :
+				two_month(current, feb, mar);
 				break;
 			
 			case 3 :
@@ -97,8 +98,45 @@ void plan(){
 		printf("│Basic fee   │ \\ 45000                         │\n");
 		printf("└──────────────────────────────────────────────┘\n");
 		
-		printf("Back to main menu Y/N : ");
-		scanf("\n%c",&a);
+		while(1){
+			printf("Back to main menu Y/N : ");
+			scanf("\n%c", &a);
+			
+			if(a == 'N' || a == 'Y')
+				break;
+			
+			printf("Wrong Input\n");
+		}
+		if(a == 'Y')
+			break;
+	}
+}
+
+void two_month(int plan, float feb[], float mar[]){
+	char a;
+	while(1){
+		system("cls");
+		printf("┌───────────────────────────────────────────────┐\n");
+		printf("│          Last two months usage                │\n");
+		printf("├───────────────────────────────────────────────┤\n");
+		printf("│  My Plan : %-14s                     │\n", plan == 0 ? "Basic Plan" : "More Data Plan");
+		printf("├───────────────────────────────────────────────┤\n");
+		printf("│           │   Feburary     │     March        │\n");
+		printf("├───────────────────────────────────────────────┤\n");
+		printf("│  Voice    │  %6.0f min    │  %6.0f min      │\n", feb[0], mar[0]);
+		printf("│  Text     │  %6.0f text   │  %6.0f text     │\n", feb[1], mar[1]);
+		printf("│  Data     │  %6.2f GB     │  %6.2f GB       │\n", feb[2], mar[2]);
+		printf("└───────────────────────────────────────────────┘\n");
+
+		while(1){
+			printf("Back to main menu Y/N : ");
+			scanf("\n%c", &a);
+			
+			if(a == 'N' || a == 'Y')
+				break;
+			
+			printf("Wrong Input\n");
+		}
 		if(a == 'Y')
 			break;
 	}
