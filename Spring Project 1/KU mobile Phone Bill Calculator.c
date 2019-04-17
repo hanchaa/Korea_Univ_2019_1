@@ -140,7 +140,7 @@ void two_month(int current, int usage[3][3]) {
 	printf("├───────────────────────────────────────────┤ \n");
 	printf("│  Voice    │  %6d min  │  %6d min    │ \n", usage[0][0], usage[1][0]);
 	printf("│  Text     │  %6d text │  %6d text   │ \n", usage[0][1], usage[1][1]);
-	printf("│  Data     │  %6.2f GB   │  %6.2f GB     │\n", (float)usage[0][2] / M, (float)usage[1][2] / 100);
+	printf("│  Data     │  %6.2f GB   │  %6.2f GB     │ \n", (float)usage[0][2] / M, (float)usage[1][2] / 100);
 	printf("└───────────────────────────────────────────┘ \n");
 
 	while (1) {
