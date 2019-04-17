@@ -22,13 +22,13 @@ int main(void) {
 	
 	summatrix(a, b, c);
 	
-	printf("Matrix 1: \n");
+	printf("Matrix1: \n");
 	printArray(a);
 	
-	printf("Matrix 2: \n");
+	printf("Matrix2: \n");
 	printArray(b);
 	
-	printf("Matrix 3 : \n");
+	printf("result: \n");
 	printArray(c);
 	
 	return 0;
@@ -49,7 +49,7 @@ void printArray(int arr[ROW][COL]){
 	
 	for(i = 0; i < ROW; i++){
 		for(j = 0; j < COL; j++){
-			printf("%5d",arr[i][j]);
+			printf("%4d ",arr[i][j]);
 		}
 		printf("\n");
 	}
