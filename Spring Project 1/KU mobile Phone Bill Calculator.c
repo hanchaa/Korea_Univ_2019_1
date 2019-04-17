@@ -20,7 +20,7 @@ int main(void) {
 	
 	srand(time(NULL));
 	
-	current = 0;
+	//current = 0;
 
 	// usage[0][0] = 258; usage[1][0] = 310;
 	// usage[0][1] = 85; usage[1][1] = 195;
@@ -40,16 +40,16 @@ int main(void) {
 
 	while (1) {
 		system("cls");
-		printf("┌──────────────────────────────────────────────┐\n");
-		printf("│      KU Mobile Phone Bill Calculator         │\n");
-		printf("├──────────────────────────────────────────────┤\n");
-		printf("│    1 : Display plans                         │\n");
-		printf("│    2 : Usage information for past two months │\n");
-		printf("│    3 : Input this month usage                │\n");
-		printf("│    4 : Total fee for past 3 months           │\n");
-		printf("│    5 : Best plan recommendation              │\n");
-		printf("│    6 : Exit                                  │\n");
-		printf("└──────────────────────────────────────────────┘\n");
+		printf("┌──────────────────────────────────────────────┐ \n");
+		printf("│      KU Mobile Phone Bill Calculator         │ \n");
+		printf("├──────────────────────────────────────────────┤ \n");
+		printf("│    1 : Display plans                         │ \n");
+		printf("│    2 : Usage information for past two months │ \n");
+		printf("│    3 : Input this month usage                │ \n");
+		printf("│    4 : Total fee for past 3 months           │ \n");
+		printf("│    5 : Best plan recommendation              │ \n");
+		printf("│    6 : Exit                                  │ \n");
+		printf("└──────────────────────────────────────────────┘ \n");
 		
 		while(1){
 			scanf("\n%c", &menu);
@@ -92,29 +92,29 @@ void display_plan(int plan[2][7]) {
 	char a;
 
 	system("cls");
-	printf("┌───────────────────────────────────────────┐\n");
-	printf("│                Basic Plan                 │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  Included in Plan  │   Additional usages  │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │\n", plan[0][0], plan[0][3]);
-	printf("│ Text      │  %dt free   │  \\ %d / 1m     │\n", plan[0][1], plan[0][4]);
-	printf("│ Data      │  %.2fGB free │  \\ %d / 0.1GB│\n", (float)plan[0][2] / M, plan[0][5]);
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│ Basic fee │  \\ %d                      │\n", plan[0][6]);
-	printf("└───────────────────────────────────────────┘\n\n");
+	printf("┌───────────────────────────────────────────┐ \n");
+	printf("│                Basic Plan                 │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  Included in Plan  │   Additional usages  │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │ \n", plan[0][0], plan[0][3]);
+	printf("│ Text      │  %dt free   │  \\ %d / 1m     │ \n", plan[0][1], plan[0][4]);
+	printf("│ Data      │  %.2fGB free │  \\ %d / 0.1GB│ \n", (float)plan[0][2] / M, plan[0][5]);
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│ Basic fee │  \\ %d                      │ \n", plan[0][6]);
+	printf("└───────────────────────────────────────────┘ \n\n");
 
-	printf("┌───────────────────────────────────────────┐\n");
-	printf("│             More Data Plan                │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  Included in Plan  │   Additional usages  │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │\n", plan[1][0], plan[1][3]);
-	printf("│ Text      │  %dt fre    │  \\ %d / 1m     │\n", plan[1][1], plan[1][4]);
-	printf("│ Data      │  %.2fGB free│  \\ %d / 0.1GB │\n", (float)plan[1][2] / M, plan[1][5]);
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│ Basic fee │ \\ %d                       │\n", plan[1][6]);
-	printf("└───────────────────────────────────────────┘\n");
+	printf("┌───────────────────────────────────────────┐ \n");
+	printf("│             More Data Plan                │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  Included in Plan  │   Additional usages  │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │ \n", plan[1][0], plan[1][3]);
+	printf("│ Text      │  %dt fre    │  \\ %d / 1m     │ \n", plan[1][1], plan[1][4]);
+	printf("│ Data      │  %.2fGB free│  \\ %d / 0.1GB │ \n", (float)plan[1][2] / M, plan[1][5]);
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│ Basic fee │ \\ %d                       │ \n", plan[1][6]);
+	printf("└───────────────────────────────────────────┘ \n");
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
@@ -131,17 +131,17 @@ void two_month(int current, int usage[3][3]) {
 	char a;
 	
 	system("cls");
-	printf("┌───────────────────────────────────────────┐\n");
-	printf("│           Last two months usage           │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  My Plan : %-14s                 │\n", current == 0 ? "Basic Plan" : "More Data Plan");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│           │   Feburary   │     March      │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  Voice    │  %6d min  │  %6d min    │\n", usage[0][0], usage[1][0]);
-	printf("│  Text     │  %6d text │  %6d text   │\n", usage[0][1], usage[1][1]);
+	printf("┌───────────────────────────────────────────┐ \n");
+	printf("│           Last two months usage           │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  My Plan : %-14s                 │ \n", current == 0 ? "Basic Plan" : "More Data Plan");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│           │   Feburary   │     March      │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  Voice    │  %6d min  │  %6d min    │ \n", usage[0][0], usage[1][0]);
+	printf("│  Text     │  %6d text │  %6d text   │ \n", usage[0][1], usage[1][1]);
 	printf("│  Data     │  %6.2f GB   │  %6.2f GB     │\n", (float)usage[0][2] / M, (float)usage[1][2] / 100);
-	printf("└───────────────────────────────────────────┘\n");
+	printf("└───────────────────────────────────────────┘ \n");
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
@@ -218,21 +218,21 @@ void three_month(int current, int usage[3][3], int plan[2][7]) {
 
 	system("cls");
 
-	printf("┌────────────────────────────────────────────────────────────┐\n");
-	printf("│                     My three months usage                  │\n");
-	printf("├────────────────────────────────────────────────────────────┤\n");
-	printf("│ My Plan : %-14s                                   │\n", current == 0 ? "Basic Plan" : "More Data Plan");
-	printf("├────────────────────────────────────────────────────────────┤\n");
-	printf("│           │   Feburary   │     March      │     April      │\n");
-	printf("├────────────────────────────────────────────────────────────┤\n");
-	printf("│ Voice     │  %6d min  │  %6d min    │  %6d min    │\n", usage[0][0], usage[1][0], usage[2][0]);
-	printf("│ Text      │  %6d text │  %6d text   │  %6d text   │\n", usage[0][1], usage[1][1], usage[2][1]);
-	printf("│ Data      │  %6.2f GB   │  %6.2f GB     │  %6.2f GB     │\n", (float)usage[0][2] / M, (float)usage[1][2] / M, (float)usage[2][2] / M);
-	printf("├────────────────────────────────────────────────────────────┤\n");
-	printf("│ Extra Data│  %6.2f GB   │  %6.2f GB     │  %6.2f GB     │\n", (float)extra[1] / M, (float)extra[2] / M, (float)extra[3] / M);
-	printf("├────────────────────────────────────────────────────────────┤\n");
-	printf("│ Total Fee │  \\ %7d   │  \\ %7d     │  \\ %7d     │\n", sum[0], sum[1], sum[2]);
-	printf("└────────────────────────────────────────────────────────────┘\n");
+	printf("┌────────────────────────────────────────────────────────────┐ \n");
+	printf("│                     My three months usage                  │ \n");
+	printf("├────────────────────────────────────────────────────────────┤ \n");
+	printf("│ My Plan : %-14s                                   │ \n", current == 0 ? "Basic Plan" : "More Data Plan");
+	printf("├────────────────────────────────────────────────────────────┤ \n");
+	printf("│           │   Feburary   │     March      │     April      │ \n");
+	printf("├────────────────────────────────────────────────────────────┤ \n");
+	printf("│ Voice     │  %6d min  │  %6d min    │  %6d min    │ \n", usage[0][0], usage[1][0], usage[2][0]);
+	printf("│ Text      │  %6d text │  %6d text   │  %6d text   │ \n", usage[0][1], usage[1][1], usage[2][1]);
+	printf("│ Data      │  %6.2f GB   │  %6.2f GB     │  %6.2f GB     │ \n", (float)usage[0][2] / M, (float)usage[1][2] / M, (float)usage[2][2] / M);
+	printf("├────────────────────────────────────────────────────────────┤ \n");
+	printf("│ Extra Data│  %6.2f GB   │  %6.2f GB     │  %6.2f GB     │ \n", (float)extra[1] / M, (float)extra[2] / M, (float)extra[3] / M);
+	printf("├────────────────────────────────────────────────────────────┤ \n");
+	printf("│ Total Fee │  \\ %7d   │  \\ %7d     │  \\ %7d     │ \n", sum[0], sum[1], sum[2]);
+	printf("└────────────────────────────────────────────────────────────┘ \n");
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
@@ -274,20 +274,20 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 	}
 	
 	system("cls");
-	printf("┌───────────────────────────────────────────┐\n");
-	printf("│         Average usage of 3-month          │\n");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  My Plan : %-14s                 │\n", current == 0 ? "Basic Plan" : "More Data Plan");
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  Average usage of voice : %5d           │\n", avg[0]);
-	printf("│  Average usage of text : %6d           │\n", avg[1]);
-	printf("│  Average usage of data : %6.2f           │\n", (float)avg[2] / M);
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  Basic Plan Fee :      \\%7d           │\n", sum1);
-	printf("│  More Data Plan Fee  : \\%7d           │\n", sum2);
-	printf("├───────────────────────────────────────────┤\n");
-	printf("│  We recommend to use %-14s       │\n", sum1 < sum2 ? "Basic Plan" : "More Data Plan");
-	printf("└───────────────────────────────────────────┘\n");
+	printf("┌───────────────────────────────────────────┐ \n");
+	printf("│         Average usage of 3-month          │ \n");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  My Plan : %-14s                 │ \n", current == 0 ? "Basic Plan" : "More Data Plan");
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  Average usage of voice : %5d           │ \n", avg[0]);
+	printf("│  Average usage of text : %6d           │ \n", avg[1]);
+	printf("│  Average usage of data : %6.2f           │ \n", (float)avg[2] / M);
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  Basic Plan Fee :      \\%7d           │ \n", sum1);
+	printf("│  More Data Plan Fee  : \\%7d           │ \n", sum2);
+	printf("├───────────────────────────────────────────┤ \n");
+	printf("│  We recommend to use %-14s       │ \n", sum1 < sum2 ? "Basic Plan" : "More Data Plan");
+	printf("└───────────────────────────────────────────┘ \n");
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
