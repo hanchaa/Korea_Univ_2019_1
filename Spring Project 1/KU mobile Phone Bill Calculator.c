@@ -52,7 +52,7 @@ int main(void) {
 		printf("└──────────────────────────────────────────────┘ \n");
 		
 		while(1){
-			scanf("\n%c", &menu);
+			scanf(" %c", &menu);
 			
 			if(menu >= '1' && menu <= '6')
 				break;
@@ -118,7 +118,7 @@ void display_plan(int plan[2][7]) {
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf("\n%c", &a);
+		scanf(" %c", &a);
 
 		if (a == 'Y')
 			break;
@@ -145,7 +145,7 @@ void two_month(int current, int usage[3][3]) {
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf("\n%c", &a);
+		scanf(" %c", &a);
 
 		if (a == 'Y')
 			break;
@@ -183,7 +183,7 @@ int input(int usage[3][3], int chk) {
 		
 		while (1) {
 			printf("Back to main menu Y/N : ");
-			scanf("\n%c", &a);
+			scanf(" %c", &a);
 
 			if (a == 'Y')
 				break;
@@ -236,7 +236,7 @@ void three_month(int current, int usage[3][3], int plan[2][7]) {
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf("\n%c", &a);
+		scanf(" %c", &a);
 
 		if (a == 'Y')
 			break;
@@ -291,7 +291,7 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf("\n%c", &a);
+		scanf(" %c", &a);
 
 		if (a == 'Y')
 			break;
