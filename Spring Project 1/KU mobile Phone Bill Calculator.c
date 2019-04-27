@@ -161,8 +161,9 @@ int input(int usage[3][3], int chk) {
 	
 	system("cls");
 	
+	printf("=================================\n");
+	
 	if(chk == 0){
-		printf("=================================\n");
 		printf("Input your usages of voice : ");
 		scanf("%d", &usage[2][0]);
 
@@ -178,18 +179,19 @@ int input(int usage[3][3], int chk) {
 	}
 	
 	else{
-		printf("==========================\n");
-		printf("You've already input!\n");
-		
-		while (1) {
-			printf("Back to main menu Y/N : ");
-			scanf(" %c", &a);
+		printf("Input your usages of voice : %d\n", usage[2][0]);
+		printf("Input your usages of text : %d\n", usage[2][1]);
+		printf("Input your usages of data : %d\n", usage[2][2]);
+	}
+	
+	while (1) {
+		printf("Back to main menu Y/N : ");
+		scanf(" %c", &a);
 
-			if (a == 'Y')
-				break;
-			else if(a != 'N')
-				printf("Wrong Input!\n");
-		}
+		if (a == 'Y')
+			break;
+		else if(a != 'N')
+			printf("Wrong Input!\n");
 	}
 	
 	return chk;
@@ -258,20 +260,18 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 		avg[i] = (int)((float)avg[i] / 3 + 0.5);
 	}
 
-	for (int i = 0; i < 3; i++) {
-		if (i == 2) {
-			if (avg[i] > plan[0][2])
-				sum1 += (avg[i] - plan[0][2]) / 10 * plan[0][5];
-			if (avg[i] > plan[1][2])
-				sum2 += (avg[i] - plan[1][2]) / 10 * plan[1][5];
-		}
-		else {
-			if (avg[i] > plan[0][i])
-				sum1 += (avg[i] - plan[0][i]) * plan[0][i + 3];
-			if (avg[i] > plan[1][i])
-				sum2 += (avg[i] - plan[1][i]) * plan[1][i + 3];
-		}
+	for (int i = 0; i < 2; i++) {
+		if (avg[i] > plan[0][i])
+			sum1 += (avg[i] - plan[0][i]) * plan[0][i + 3];
+		if (avg[i] > plan[1][i])
+			sum2 += (avg[i] - plan[1][i]) * plan[1][i + 3];
 	}
+	
+	if (avg[2] > plan[0][2])
+		sum1 += (avg[2] - plan[0][2]) / 10 * plan[0][5];
+	
+	if (avg[2] > plan[1][2])
+		sum2 += (avg[2] - plan[1][2]) / 10 * plan[1][5];
 	
 	system("cls");
 	printf("┌───────────────────────────────────────────┐ \n");
