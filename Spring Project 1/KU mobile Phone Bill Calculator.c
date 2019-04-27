@@ -8,6 +8,7 @@ void two_month(int current, int usage[3][3]);
 int input(int usage[3][3], int chk);
 void three_month(int current, int usage[3][3], int plan[2][7]);
 void recommend(int current, int usage[3][3], int plan[2][7]);
+void back_to_menu();
 
 int main(void) {
 
@@ -128,7 +129,6 @@ void display_plan(int plan[2][7]) {
 }
 
 void two_month(int current, int usage[3][3]) {
-	char a;
 	
 	system("cls");
 	printf("┌───────────────────────────────────────────┐ \n");
@@ -143,15 +143,7 @@ void two_month(int current, int usage[3][3]) {
 	printf("│  Data     │  %6.2f GB   │  %6.2f GB     │ \n", (float)usage[0][2] / M, (float)usage[1][2] / 100);
 	printf("└───────────────────────────────────────────┘ \n");
 
-	while (1) {
-		printf("  Back to main menu Y/N : ");
-		scanf(" %c", &a);
-
-		if (a == 'Y')
-			break;
-		else if(a != 'N')
-			printf("  Wrong Input!\n");
-	}
+	back_to_menu();
 }
 
 int input(int usage[3][3], int chk) {
@@ -236,15 +228,7 @@ void three_month(int current, int usage[3][3], int plan[2][7]) {
 	printf("│ Total Fee │  \\ %7d   │  \\ %7d     │  \\ %7d     │ \n", sum[0], sum[1], sum[2]);
 	printf("└────────────────────────────────────────────────────────────┘ \n");
 
-	while (1) {
-		printf("  Back to main menu Y/N : ");
-		scanf(" %c", &a);
-
-		if (a == 'Y')
-			break;
-		else if(a != 'N')
-			printf("  Wrong Input!\n");
-	}
+	back_to_menu();
 }
 
 void recommend(int current, int usage[3][3], int plan[2][7]) {
@@ -289,6 +273,13 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 	printf("│  We recommend to use %-14s       │ \n", sum1 < sum2 ? "Basic Plan" : "More Data Plan");
 	printf("└───────────────────────────────────────────┘ \n");
 
+	back_to_menu();
+}
+
+void back_to_menu(){
+	
+	char a; 
+	
 	while (1) {
 		printf("  Back to main menu Y/N : ");
 		scanf(" %c", &a);
