@@ -12,20 +12,12 @@ void back_to_menu();
 
 int main(void) {
 
-	int current, chk = 0;
+	int current, chk = 0, menu;
 
 	int usage[3][3] = { 0 };
 	int plan[2][7] = { {500, 100, 200, 50, 10, 1000, 20000}, {300, 100, 3000, 10, 30, 500, 45000} };
-
-	char menu;
 	
 	srand(time(NULL));
-	
-	//current = 0;
-
-	// usage[0][0] = 258; usage[1][0] = 310;
-	// usage[0][1] = 85; usage[1][1] = 195;
-	// usage[0][2] = 2189; usage[1][2] = 155;
 	
 	current = rand() % 2;
 
@@ -53,36 +45,36 @@ int main(void) {
 		printf("└──────────────────────────────────────────────┘ \n");
 		
 		while(1){
-			scanf(" %c", &menu);
+			scanf(" %d", &menu);
 			
-			if(menu >= '1' && menu <= '6')
+			if(menu >= 1 && menu <= 6)
 				break;
 			else
 				printf("Wrong Input!\n");
 		}
 
 		switch (menu) {
-		case '1':
+		case 1:
 			display_plan(plan);
 			break;
 
-		case '2':
+		case 2:
 			two_month(current, usage);
 			break;
 
-		case '3':
+		case 3:
 			chk = input(usage, chk);
 			break;
 
-		case '4':
+		case 4:
 			three_month(current, usage, plan);
 			break;
 
-		case '5':
+		case 5:
 			recommend(current, usage, plan);
 			break;
 
-		case '6':
+		case 6:
 			return 0;
 		}
 	}
@@ -117,15 +109,7 @@ void display_plan(int plan[2][7]) {
 	printf("│ Basic fee │ \\ %d                       │ \n", plan[1][6]);
 	printf("└───────────────────────────────────────────┘ \n");
 
-	while (1) {
-		printf("  Back to main menu Y/N : ");
-		scanf(" %c", &a);
-
-		if (a == 'Y')
-			break;
-		else if(a != 'N')
-			printf("  Wrong Input!\n");
-	}
+	back_to_menu();
 }
 
 void two_month(int current, int usage[3][3]) {
