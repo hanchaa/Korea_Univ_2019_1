@@ -15,7 +15,7 @@ int main(void) {
 	int current, chk = 0, menu;
 
 	int usage[3][3] = { 0 };
-	int plan[2][7] = { {500, 100, 200, 50, 10, 1000, 20000}, {300, 100, 3000, 10, 30, 500, 45000} };
+	int plan[2][7] = { {500, 100, 200, 50, 10, 100, 20000}, {300, 100, 3000, 10, 30, 50, 45000} };
 	
 	srand(time(NULL));
 	
@@ -170,7 +170,7 @@ int input(int usage[3][3], int chk) {
 			printf("Wrong Input!\n");
 		}
 
-		usage[2][2] = (tmp + 0.005) * M;
+		usage[2][2] = (int)((tmp + 0.005) * M);
 		
 		chk++;
 	}
@@ -212,7 +212,7 @@ void three_month(int current, int usage[3][3], int plan[2][7]) {
 				sum[i] += (usage[i][j] - plan[current][j]) * plan[current][j + 3];
 		}
 		if (usage[i][2] > plan[current][2] + extra[i])
-			sum[i] += (usage[i][2] - plan[current][2] - extra[i]) / 10 * plan[current][5];
+			sum[i] += (usage[i][2] - plan[current][2] - extra[i]) * plan[current][5];
 	}
 
 	system("cls");
@@ -257,10 +257,10 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 	}
 	
 	if (avg[2] > plan[0][2])
-		sum1 += (avg[2] - plan[0][2]) / 10 * plan[0][5];
+		sum1 += (avg[2] - plan[0][2]) * plan[0][5];
 	
 	if (avg[2] > plan[1][2])
-		sum2 += (avg[2] - plan[1][2]) / 10 * plan[1][5];
+		sum2 += (avg[2] - plan[1][2]) * plan[1][5];
 	
 	system("cls");
 	printf("┌───────────────────────────────────────────┐ \n");
