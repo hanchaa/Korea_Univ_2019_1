@@ -140,14 +140,35 @@ int input(int usage[3][3], int chk) {
 	printf("=================================\n");
 	
 	if(chk == 0){
-		printf("Input your usages of voice : ");
-		scanf("%d", &usage[2][0]);
+		while(1){
+			printf("Input your usages of voice : ");
+			scanf("%d", &usage[2][0]);
+			
+			if(usage[2][0] >= 0)
+				break;
+			
+			printf("Wrong Input!\n");
+		}
 
-		printf("Input your usages of text : ");
-		scanf("%d", &usage[2][1]);
+		while(1){
+			printf("Input your usages of text : ");
+			scanf("%d", &usage[2][1]);
+			
+			if(usage[2][1] >= 0)
+				break;
+			
+			printf("Wrong Input!\n");
+		}
 
-		printf("Input your usages of data : ");
-		scanf("%f", &tmp);
+		while(1){
+			printf("Input your usages of data : ");
+			scanf("%f", &tmp);
+			
+			if(tmp >= 0)
+				break;
+			
+			printf("Wrong Input!\n");
+		}
 
 		usage[2][2] = (tmp + 0.005) * M;
 		
@@ -157,7 +178,7 @@ int input(int usage[3][3], int chk) {
 	else{
 		printf("Input your usages of voice : %d\n", usage[2][0]);
 		printf("Input your usages of text : %d\n", usage[2][1]);
-		printf("Input your usages of data : %d\n", usage[2][2]);
+		printf("Input your usages of data : %.2f\n", (float)usage[2][2] / M);
 	}
 	
 	while (1) {
