@@ -24,8 +24,8 @@ int main(void) {
 	usage[0][0] = rand() % 700 + 1;
 	usage[1][0] = rand() % 700 + 1;
 
-	usage[0][1] = rand() % 300;
-	usage[1][1] = rand() % 300;
+	usage[0][1] = rand() % 301;
+	usage[1][1] = rand() % 301;
 
 	usage[0][2] = rand() % 14951 + 50;
 	usage[1][2] = rand() % 14951 + 50;
