@@ -91,7 +91,7 @@ void display_plan(int plan[2][7]) {
 	printf("├───────────────────────────────────────────┤ \n");
 	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │ \n", plan[0][0], plan[0][3]);
 	printf("│ Text      │  %dt free   │  \\ %d / 1m     │ \n", plan[0][1], plan[0][4]);
-	printf("│ Data      │  %.2fGB free │  \\ %d / 0.1GB│ \n", (float)plan[0][2] / M, plan[0][5]);
+	printf("│ Data      │  %.2fGB free │  \\ %d / 0.1GB │ \n", (float)plan[0][2] / M, plan[0][5]);
 	printf("├───────────────────────────────────────────┤ \n");
 	printf("│ Basic fee │  \\ %d                      │ \n", plan[0][6]);
 	printf("└───────────────────────────────────────────┘ \n\n");
@@ -103,7 +103,7 @@ void display_plan(int plan[2][7]) {
 	printf("├───────────────────────────────────────────┤ \n");
 	printf("│ Voice     │  %dm free   │  \\ %d / 1m     │ \n", plan[1][0], plan[1][3]);
 	printf("│ Text      │  %dt fre    │  \\ %d / 1m     │ \n", plan[1][1], plan[1][4]);
-	printf("│ Data      │  %.2fGB free│  \\ %d / 0.1GB │ \n", (float)plan[1][2] / M, plan[1][5]);
+	printf("│ Data      │  %.2fGB free│  \\ %d / 0.1GB  │ \n", (float)plan[1][2] / M, plan[1][5]);
 	printf("├───────────────────────────────────────────┤ \n");
 	printf("│ Basic fee │ \\ %d                       │ \n", plan[1][6]);
 	printf("└───────────────────────────────────────────┘ \n");
