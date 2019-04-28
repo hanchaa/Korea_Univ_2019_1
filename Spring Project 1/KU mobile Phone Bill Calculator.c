@@ -82,7 +82,6 @@ int main(void) {
 }
 
 void display_plan(int plan[2][7]) {
-	char a;
 
 	system("cls");
 	printf("┌───────────────────────────────────────────┐ \n");
@@ -196,7 +195,6 @@ int input(int usage[3][3], int chk) {
 
 void three_month(int current, int usage[3][3], int plan[2][7]) {
 	int extra[5] = { 0 }, sum[5] = { 0 };
-	char a;
 
 	for (int i = 0; i < 3; i++) {
 		if (usage[i][2] < plan[current][2]) {
