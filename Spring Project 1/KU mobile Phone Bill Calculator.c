@@ -235,7 +235,6 @@ void three_month(int current, int usage[3][3], int plan[2][7]) {
 }
 
 void recommend(int current, int usage[3][3], int plan[2][7]) {
-	char a;
 	int sum1 = plan[0][6], sum2 = plan[1][6];
 
 	int avg[3] = { 0 };
