@@ -5,17 +5,18 @@
 
 void display_plan(int plan[2][7]);
 void two_month(int current, int usage[3][3]);
-int input(int usage[3][3], int chk);
+void input(int usage[3][3]);
 void three_month(int current, int usage[3][3], int plan[2][7]);
 void recommend(int current, int usage[3][3], int plan[2][7]);
 void back_to_menu();
+int remove_buffer();
 
 int main(void) {
 
-	int current, chk = 0, menu;
-
+	int current, chk = 0;
 	int usage[3][3] = { 0 };
 	int plan[2][7] = { {500, 100, 200, 50, 10, 100, 20000}, {300, 100, 3000, 10, 30, 50, 45000} };
+	char menu;
 	
 	srand(time(NULL));
 	
@@ -45,36 +46,37 @@ int main(void) {
 		printf("└──────────────────────────────────────────────┘ \n");
 		
 		while(1){
-			scanf(" %d", &menu);
+			scanf("%c", &menu);
+			int tmp = remove_buffer();
 			
-			if(menu >= 1 && menu <= 6)
+			if(tmp == 0 && (menu >= '1' && menu <= '6'))
 				break;
 			else
 				printf("Wrong Input!\n");
 		}
 
 		switch (menu) {
-		case 1:
+		case '1':
 			display_plan(plan);
 			break;
 
-		case 2:
+		case '2':
 			two_month(current, usage);
 			break;
 
-		case 3:
-			chk = input(usage, chk);
+		case '3':
+			input(usage);
 			break;
 
-		case 4:
+		case '4':
 			three_month(current, usage, plan);
 			break;
 
-		case 5:
+		case '5':
 			recommend(current, usage, plan);
 			break;
 
-		case 6:
+		case '6':
 			return 0;
 		}
 	}
@@ -129,7 +131,7 @@ void two_month(int current, int usage[3][3]) {
 	back_to_menu();
 }
 
-int input(int usage[3][3], int chk) {
+void input(int usage[3][3]) {
 
 	float tmp;
 	char a;
@@ -138,59 +140,54 @@ int input(int usage[3][3], int chk) {
 	
 	printf("=================================\n");
 	
-	if(chk == 0){
-		while(1){
-			printf("Input your usages of voice : ");
-			scanf("%d", &usage[2][0]);
-			
-			if(usage[2][0] >= 0)
-				break;
-			
-			printf("Wrong Input!\n");
-		}
+	while(1){
+		printf("Input your usages of voice : ");
+		scanf("%d", &usage[2][0]);
 
-		while(1){
-			printf("Input your usages of text : ");
-			scanf("%d", &usage[2][1]);
-			
-			if(usage[2][1] >= 0)
-				break;
-			
-			printf("Wrong Input!\n");
-		}
+		if(usage[2][0] >= 0)
+			break;
 
-		while(1){
-			printf("Input your usages of data : ");
-			scanf("%f", &tmp);
-			
-			if(tmp >= 0)
-				break;
-			
-			printf("Wrong Input!\n");
-		}
-
-		usage[2][2] = (int)((tmp + 0.005) * M);
-		
-		chk++;
+		printf("Wrong Input!\n");
 	}
+
+	while(1){
+		printf("Input your usages of text : ");
+		scanf("%d", &usage[2][1]);
+
+		if(usage[2][1] >= 0)
+			break;
+
+		printf("Wrong Input!\n");
+	}
+
+	while(1){
+		printf("Input your usages of data : ");
+		scanf("%f", &tmp);
+
+		if(tmp >= 0)
+			break;
+
+		printf("Wrong Input!\n");
+	}
+
+	usage[2][2] = (int)((tmp + 0.005) * M);
 	
-	else{
-		printf("Input your usages of voice : %d\n", usage[2][0]);
-		printf("Input your usages of text : %d\n", usage[2][1]);
-		printf("Input your usages of data : %.2f\n", (float)usage[2][2] / M);
-	}
+	remove_buffer();
 	
 	while (1) {
 		printf("Back to main menu Y/N : ");
-		scanf(" %c", &a);
+		scanf("%c", &a);
+		int temp = remove_buffer();
 
-		if (a == 'Y')
+		if (a == 'Y' && temp == 0)
 			break;
+		
+		else if(temp == 1)
+			printf("Wrong Input!\n");
+		
 		else if(a != 'N')
 			printf("Wrong Input!\n");
 	}
-	
-	return chk;
 }
 
 void three_month(int current, int usage[3][3], int plan[2][7]) {
@@ -284,11 +281,26 @@ void back_to_menu(){
 	
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf(" %c", &a);
+		scanf("%c", &a);
+		int tmp = remove_buffer();
 
-		if (a == 'Y')
+		if (a == 'Y' && tmp == 0)
 			break;
+		
+		else if(tmp == 1)
+			printf("  Wrong Input!\n");
+		
 		else if(a != 'N')
 			printf("  Wrong Input!\n");
 	}
+}
+
+int remove_buffer(){
+	int tmp = 0;
+	
+	while(getchar() != '\n'){
+		tmp = 1;
+	}
+	
+	return tmp;
 }
