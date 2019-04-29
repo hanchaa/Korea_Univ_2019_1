@@ -23,10 +23,11 @@ int main(void) {
 	result = BinarySearch(a, key, 0, SIZE - 1);
 	
 	if(result != -1) {
-		printf("%d found in array element %d\n", key, result);
+		printf("\n%d found in array element %d\n", key, result);
 	}
+	
 	else{
-		printf("%d not found\n", key);
+		printf("\n%d not found\n", key);
 	}
 	
 	return 0;
@@ -35,22 +36,21 @@ int main(void) {
 int BinarySearch(const int b[], int searchKey, int low, int high){
 	int middle;
 	
-	while(low <= high){
-		middle = (low + high) / 2;
-		
-		printRow(b, low, middle, high);
-		
-		if(searchKey == b[middle])
-			return middle;
-		
-		else if(searchKey < b[middle])
-			high = middle - 1;
-		
-		else
-			low = middle + 1;
-	}
+	if(low > high)
+		return -1;
 	
-	return -1;
+	middle = (low + high) / 2;
+
+	printRow(b, low, middle, high);
+
+	if(searchKey == b[middle])
+		return middle;
+
+	else if(searchKey < b[middle])
+		return BinarySearch(b, searchKey, low, middle - 1);
+
+	else
+		return BinarySearch(b, searchKey, middle + 1, high);
 }
 
 void printHeader(){
