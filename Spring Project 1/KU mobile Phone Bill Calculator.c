@@ -52,7 +52,7 @@ int main(void) {
 			if(tmp == 0 && (menu >= '1' && menu <= '6'))
 				break;
 			else
-				printf("Wrong Input!\n");
+				printf("Pleas Input 1 to 6!\n");
 		}
 
 		switch (menu) {
@@ -174,20 +174,7 @@ void input(int usage[3][3]) {
 	
 	remove_buffer();
 	
-	while (1) {
-		printf("Back to main menu Y/N : ");
-		scanf("%c", &a);
-		int temp = remove_buffer();
-
-		if (a == 'Y' && temp == 0)
-			break;
-		
-		else if(temp == 1)
-			printf("Wrong Input!\n");
-		
-		else if(a != 'N')
-			printf("Wrong Input!\n");
-	}
+	back_to_menu();
 }
 
 void three_month(int current, int usage[3][3], int plan[2][7]) {
@@ -288,10 +275,10 @@ void back_to_menu(){
 			break;
 		
 		else if(tmp == 1)
-			printf("  Wrong Input!\n");
+			printf("  Please Input Y/N!\n");
 		
 		else if(a != 'N')
-			printf("  Wrong Input!\n");
+			printf("  Please Input Y/N!\n");
 	}
 }
 
