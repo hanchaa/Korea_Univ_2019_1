@@ -227,18 +227,12 @@ void recommend(int current, int usage[3][3], int plan[2][7]) {
 		avg[i] = (int)((float)avg[i] / 3 + 0.5);
 	}
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		if (avg[i] > plan[0][i])
 			sum1 += (avg[i] - plan[0][i]) * plan[0][i + 3];
 		if (avg[i] > plan[1][i])
 			sum2 += (avg[i] - plan[1][i]) * plan[1][i + 3];
 	}
-
-	if (avg[2] > plan[0][2])
-		sum1 += (avg[2] - plan[0][2]) * plan[0][5];
-
-	if (avg[2] > plan[1][2])
-		sum2 += (avg[2] - plan[1][2]) * plan[1][5];
 
 	system("cls");
 	printf("忙式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式忖 \n");
