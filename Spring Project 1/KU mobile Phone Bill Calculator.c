@@ -46,7 +46,7 @@ int main(void) {
 		printf("└──────────────────────────────────────────────┘ \n");
 		
 		while(1){
-			scanf("%c", &menu);
+			while((menu = getchar()) == '\n'){}
 			int tmp = remove_buffer();
 			
 			if(tmp == 0 && (menu >= '1' && menu <= '6'))
@@ -268,7 +268,7 @@ void back_to_menu(){
 	
 	while (1) {
 		printf("  Back to main menu Y/N : ");
-		scanf("%c", &a);
+		while((a = getchar()) == '\n'){}
 		int tmp = remove_buffer();
 
 		if (a == 'Y' && tmp == 0)
