@@ -15,9 +15,11 @@ int main(void){
 		while(token != NULL){
 			cnt[strlen(token)]++;
 			
-			token = strtok(NULL, ". T\n");
+			token = strtok(NULL, ". \n");
 		}
 	}
+	
+	printf("\n");
 	
 	for(int i = 1; i < 80; i++){
 		if(cnt[i] > 1)
