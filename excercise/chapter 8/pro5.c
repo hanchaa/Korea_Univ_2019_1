@@ -24,10 +24,7 @@ void encryptor(char s[][10], char cipher[]){
 	strcpy(cipher, s[tmp]);
 	
 	for(int i = 0; cipher[i]; i++){
-		if(cipher[i] + key > 'z')
-			cipher[i] = cipher[i] + key - 'z' + 'a' - 1;
-		else
-			cipher[i] = cipher[i] + key;
+		cipher[i] = cipher[i] + key;
 	}
 	
 	printf("        - Encryptor -\n");
@@ -48,8 +45,6 @@ void decryptor(char s[][10], char cipher[]){
 		
 		for(j = 0; cipher[j]; j++){
 			cipher[j]--;
-			if(cipher[j] < 'a')
-				cipher[j] = 'z';
 		}
 		
 		printf("  Plaintext: %s\n", cipher);
