@@ -44,7 +44,15 @@ int main(void) {
 		printf("5. Exit\n\n");
 		printf("===================================\n");
 		printf("Select Menu  : ");
-		scanf("%d", &menu);
+		scanf_s("%d", &menu);
+
+		if (menu < 1 || menu > 5) {
+			while (menu < 1 || menu > 5) {
+				printf("Please Enter 1 ~ 5\n");
+				printf("Select Menu : ");
+				scanf_s("%d", &menu);
+			}
+		}
 
 		if (menu == 1)
 			view(student, cnt);
@@ -58,11 +66,8 @@ int main(void) {
 		else if (menu == 4)
 			grade(student, cnt);
 
-		else if (menu == 5)
-			break;
-
 		else
-			printf("Please Enter 1 ~ 5\n");
+			break;
 	}
 	return 0;
 }
@@ -71,7 +76,9 @@ void back_to_menu() {
 	int tmp = 0;
 	while (tmp != 1) {
 		printf("Enter 1 to Go Back : ");
-		scanf("%d", &tmp);
+		scanf_s("%d", &tmp);
+		if (tmp != 1)
+			printf("Wrong Input!\n");
 	}
 }
 
@@ -101,13 +108,19 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 	printf("===================================\n");
 	if (cnt < 79) {
 		printf("Student Name : ");
-		scanf("%s", student[cnt].name);
+		scanf_s("%s", student[cnt].name, 30);
 
 		printf("Student ID : ");
-		scanf("%d", &student[cnt].student_id);
+		scanf_s("%d", &student[cnt].student_id);
 
-		printf("attendance (0 ~ 10) : ");
-		scanf("%d", &student[cnt].attendance);
+		while (1) {
+			printf("attendance (0 ~ 10) : ");
+			scanf_s("%d", &student[cnt].attendance);
+			if (student[cnt].attendance < 0 || student[cnt].attendance > 10)
+				printf("Please input 0 ~ 10\n");
+			else
+				break;
+		}
 
 		data[cnt].attendance = student[cnt].attendance;
 		avg->attendance += student[cnt].attendance;
@@ -125,9 +138,14 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		else
 			mid->attendance = data[cnt / 2].attendance;
 
-
-		printf("Assignment (0 ~ 10) : ");
-		scanf("%d", &student[cnt].assignment);
+		while(1) {
+			printf("Assignment (0 ~ 10) : ");
+			scanf_s("%d", &student[cnt].assignment);
+			if (student[cnt].assignment < 0 || student[cnt].assignment > 10)
+				printf("Please input 0 ~ 10\n");
+			else
+				break;
+		}
 
 		data[cnt].assignment = student[cnt].assignment;
 		avg->assignment += student[cnt].assignment;
@@ -145,8 +163,14 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		else
 			mid->assignment = data[cnt / 2].assignment;
 
-		printf("Mideterm Exam (0 ~ 30) : ");
-		scanf("%d", &student[cnt].midterm_exam);
+		while (1) {
+			printf("Mideterm Exam (0 ~ 30) : ");
+			scanf_s("%d", &student[cnt].midterm_exam);
+			if (student[cnt].midterm_exam < 0 || student[cnt].midterm_exam > 30)
+				printf("Pleas input 0 ~ 30\n");
+			else
+				break;
+		}
 
 		data[cnt].midterm_exam = student[cnt].midterm_exam;
 		avg->midterm_exam += student[cnt].midterm_exam;
@@ -164,8 +188,14 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		else
 			mid->midterm_exam = data[cnt / 2].midterm_exam;
 
-		printf("Final Exam (0 ~ 30) : ");
-		scanf("%d", &student[cnt].final_exam);
+		while (1) {
+			printf("Final Exam (0 ~ 30) : ");
+			scanf_s("%d", &student[cnt].final_exam);
+			if (student[cnt].final_exam < 0 || student[cnt].final_exam > 30)
+				printf("Please input 0 ~ 30\n");
+			else
+				break;
+		}
 
 		data[cnt].final_exam = student[cnt].final_exam;
 		avg->final_exam += student[cnt].final_exam;
@@ -183,8 +213,14 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		else
 			mid->final_exam = data[cnt / 2].final_exam;
 
-		printf("Term Project (0 ~ 20) : ");
-		scanf("%d", &student[cnt].term_project);
+		while (1) {
+			printf("Term Project (0 ~ 20) : ");
+			scanf_s("%d", &student[cnt].term_project);
+			if (student[cnt].term_project < 0 || student[cnt].term_project > 20)
+				printf("Please input 0 ~ 20\n");
+			else
+				break;
+		}
 
 		data[cnt].term_project = student[cnt].term_project;
 		avg->term_project += student[cnt].term_project;
