@@ -73,6 +73,7 @@ int currentStage = 0;
 int score = 0;
 int best_score = 0;
 int gameScreen[X][Y] = { 0 };
+int cnt = 0;
 
 void main() {
 	system("mode con cols=120 lines=38");
@@ -90,6 +91,7 @@ void main() {
 		moveBlock(DOWN);
 		if (!block.isactive && !block2.isactive) { // 이 부분은 떨어지는 블록이 바닥이나 다른블록에 닿았는지 체크합니다. This statement is cheking that wether the falling blocks got touched by floor or other blocks.
 			checkNumber(block.pos_x, block.pos_y);
+
 			if (isStageEnd() != 1)
 				newBlock();
 		}
@@ -346,6 +348,17 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
 
 		res = 1;
+		if (gameScreen[x][y - 1] >= 64) {
+			if (cnt == 1)
+				score += 10;
+			else
+				cnt++;
+			gameScreen[x][y - 1] = 0;
+
+			for (int i = x; i > 1; i--) 
+				gameScreen[i][y - 1] = gameScreen[i - 1][y - 1];
+			gameScreen[1][y - 1] = 0;
+		}
 	}
 
 	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
@@ -362,17 +375,26 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		res = 1;
 	}
 
-	if (x < 7 && x > 1 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = gameScreen[x - 1][y] + gameScreen[x + 1][y];
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
+		
 		res = 1;
+		if (gameScreen[x + 1][y] >= 64) {
+			if (cnt == 1)
+				score += 10;
+			else
+				cnt++;
+			gameScreen[x + 1][y] = 0;
+		}
 	}
 
-	if (x < 7 && x > 1 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = abs(gameScreen[x - 1][y] - gameScreen[x + 1][y]);
 		if (gameScreen[x + 1][y] == 0)
 			gameScreen[x + 1][y] = 999;
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
+		
 		res = 1;
 	}
 
@@ -415,19 +437,24 @@ void setGameFlow(int setGameFlowType) { // Implement this function to set condit
 			goal = 100;
 			break;
 		case 2:
-
+			time_interval_moveBlockDown = 100 / 1.3;
+			goal = 300;
 			break;
 		case 3:
-
+			time_interval_moveBlockDown = 100 / 1.5;
+			goal = 500;
 			break;
 		case 4:
-
+			time_interval_moveBlockDown = 100 / 1.7;
+			goal = 600;
 			break;
 		case 5:
-
+			time_interval_moveBlockDown = 100 / 2;
+			goal = 750;
 			break;
 		case 6:
-
+			time_interval_moveBlockDown = 100 / 2.5;
+			goal = 850;
 			break;
 		}
 		clearScreen();
