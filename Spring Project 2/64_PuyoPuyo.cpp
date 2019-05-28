@@ -97,27 +97,28 @@ void main() {
 }
 
 int getRandomNumber() {
-	/*
+	int tmp = rand() % 10;
+	
+	if (tmp >= 0 && tmp <= 4)
+		return 2;
+	
+	else if (tmp >= 5 && tmp <= 7)
+		return 4;
 
-	일정 확률로 2, 4, 8 중 하나를 생성하여 그 값을 리턴함.
-	Generate 2, 4, or 8 with certain percentage and return the number.
-
-	*/
-
-	// You should modify example value for complete this function.
-	return 2; // example retrun value
+	else if (tmp >= 8 && tmp <= 9)
+		return 8;
 }
 
 char getRandomOper() {
-	/*
+	int tmp = rand() % 2;
 
-	일정 확률로 +, - 중 하나를 생성하여 그 값을 리턴함.
-	Generate +, or - with certain percentage and return the number.
+	if (currentStage == 1)
+		tmp = 0;
 
-	*/
-
-	// You should modify example value for complete this function. 예시값을 고치셔서 함수를 완성하세요.
-	return '+'; // example retrun value 	
+	if (tmp == 0)
+		return '+';
+	else
+		return '-';
 }
 
 void newBlock() {
@@ -131,16 +132,18 @@ void newBlock() {
 	*/
 
 	// You should modify these example values for complete this function.
+	int pos = rand() % 4;
+
 	block.num = getRandomNumber(); // example of setting value
 	block2.num = getRandomOper();  // example of setting value
 
-	block.pos_x = 1; // example value of position 예시값
-	block.pos_y = 1; // example value of position 예시값
+	block.pos_x = 0; // example value of position 예시값
+	block.pos_y = pos; // example value of position 예시값
 	block.isactive = 1;
 	gameScreen[block.pos_x][block.pos_y] = block.num;
 
-	block2.pos_x = 1; // example value of position 예시값
-	block2.pos_y = 2; // example value of position 예시값
+	block2.pos_x = 0; // example value of position 예시값
+	block2.pos_y = pos + 1; // example value of position 예시값
 	block2.isactive = 1;
 	gameScreen[block2.pos_x][block2.pos_y] = block2.num;
 }
@@ -156,12 +159,14 @@ int takeBlockControl() {
 			case UP:
 				flipBlock();
 				break;
-				/*
+			
+			case LEFT:
+				moveBlock(LEFT);
+				break;
 
-				Implement cases of each dilection key
-				각 방향키에 대한 경우들을 구현하세요
-
-				*/
+			case RIGHT:
+				moveBlock(RIGHT);
+				break;
 			}
 		}
 		else { //방향키가 아닌경우  Cases for other keys
