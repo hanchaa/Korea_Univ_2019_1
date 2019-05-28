@@ -57,8 +57,8 @@ void newBlock();
 int takeBlockControl();				//블록 조작 방향 입력 받음			Taking input for moving blocks
 void flipBlock();					// Fliping function.
 void moveBlock(int direction);		// 입력 받은 방향으로 블록 이동		Moving blocks to corresponding direction of input key.
-int checkAdjacentBlock(int, int);	//Checking adjacent blocks for merging conditions
-void checkNumber(int, int);			// 블록 인접 블록숫자 확인			Checking number of adjacent block
+int checkAdjacentBlock(int, int, int);	//Checking adjacent blocks for merging conditions
+void checkNumber();			// 블록 인접 블록숫자 확인			Checking number of adjacent block
 
 		/* game flow control functions */
 int isStageEnd();  // 스테이지가 끝났는지 체크. (스테이지 클리어, 모든 스테이지 클리어, 패배)         Checking condition for end of the stage. (stage clear, all stage clear, lost)
@@ -90,7 +90,7 @@ void main() {
 		}
 		moveBlock(DOWN);
 		if (!block.isactive && !block2.isactive) { // 이 부분은 떨어지는 블록이 바닥이나 다른블록에 닿았는지 체크합니다. This statement is cheking that wether the falling blocks got touched by floor or other blocks.
-			checkNumber(block.pos_x, block.pos_y);
+			checkNumber();
 
 			if (isStageEnd() != 1)
 				newBlock();
@@ -325,7 +325,7 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 	}
 }
 
-int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking merging condition
+int checkAdjacentBlock(int x, int y, int z) { //Merging 조건 확인 함수		Checking merging condition
 	 /*
 
 	 조건확인하여 연산하고 Merging
@@ -337,7 +337,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 	 */
 	int res = 0;
 
-	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '+' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
+	if (z == 1 && y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '+' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
 		gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 1];
 
 		for (int i = x; i > 1; i--) {
@@ -360,7 +360,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		}
 	}
 
-	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
+	if (z == 2 && y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
 		gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 1]);
 		if (gameScreen[x][y - 1] == 0)
 			gameScreen[x][y - 1] = 999;
@@ -374,7 +374,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		res = 1;
 	}
 
-	if (x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (z == 3 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = gameScreen[x - 1][y] + gameScreen[x + 1][y];
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
 
@@ -388,7 +388,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		}
 	}
 
-	if (x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (z == 4 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = abs(gameScreen[x - 1][y] - gameScreen[x + 1][y]);
 		if (gameScreen[x + 1][y] == 0)
 			gameScreen[x + 1][y] = 999;
@@ -400,19 +400,19 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 	return res; //example value. 0 for none, 1 for mergable.  예시값. 0이면 합칠 블록이 없고, 1이면 있음.
 }
 
-void checkNumber(int x, int y) {
+void checkNumber() {
 
-	checkAdjacentBlock(x, y);
-	printGameScreen();
 	Sleep(200);
-
-	for (int i = X - 1; i > 0; i--) {
-		for (int j = 0; j < Y; j++) {
-			if (checkAdjacentBlock(i, j)) {
-				printGameScreen();
-				Sleep(200);
-				i = X;
-				break;
+	for (int k = 1; k <= 4; k++) {
+		for (int i = X - 1; i > 0; i--) {
+			for (int j = Y - 1; j >= 0; j--) {
+				if (checkAdjacentBlock(i, j, k)) {
+					printGameScreen();
+					Sleep(200);
+					i = X;
+					k = 1;
+					break;
+				}
 			}
 		}
 	}
@@ -471,7 +471,7 @@ int isStageEnd() { // 스테이지가 끝났는지 체크      Checking if stage ended up o
 	for (int i = X - 1; i > 1; i--) {
 		for (int j = 0; j < Y; j++) {
 			if (score >= goal) {
-				currentStage < 10 ? printEndScreen(1) : printEndScreen(2);
+				currentStage < 6 ? printEndScreen(1) : printEndScreen(2);
 				return 1;
 			}
 		}
