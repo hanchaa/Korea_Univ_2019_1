@@ -100,10 +100,10 @@ void main() {
 
 int getRandomNumber() {
 	int tmp = rand() % 10;
-	
+
 	if (tmp >= 0 && tmp <= 4)
 		return 2;
-	
+
 	else if (tmp >= 5 && tmp <= 7)
 		return 4;
 
@@ -170,7 +170,7 @@ int takeBlockControl() {
 			case UP:
 				flipBlock();
 				break;
-			
+
 			case LEFT:
 				moveBlock(LEFT);
 				break;
@@ -261,7 +261,7 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 		break;
 
 	case RIGHT:
-		if (block2.pos_y < Y - 1 && gameScreen[block2.pos_x][block2.pos_y +1] == 0) {
+		if (block2.pos_y < Y - 1 && gameScreen[block2.pos_x][block2.pos_y + 1] == 0) {
 			gameScreen[block2.pos_x][block2.pos_y + 1] = block2.num;
 			gameScreen[block2.pos_x][block2.pos_y] = 0;
 			block2.pos_y++;
@@ -304,7 +304,7 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 				}
 			}
 		}
-		
+
 		if (block2.pos_x < X - 1 && gameScreen[block2.pos_x + 1][block2.pos_y] == 0) {
 			gameScreen[block2.pos_x + 1][block2.pos_y] = block2.num;
 			gameScreen[block2.pos_x][block2.pos_y] = 0;
@@ -327,7 +327,7 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 
 int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking merging condition
 	 /*
-	
+
 	 조건확인하여 연산하고 Merging
 	  64 생성시 점수 계산
 
@@ -339,8 +339,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 
 	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '+' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
 		gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 1];
-		gameScreen[x][y] = gameScreen[x][y + 1] = 0;
-		
+
 		for (int i = x; i > 1; i--) {
 			gameScreen[i][y] = gameScreen[i - 1][y];
 			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
@@ -355,7 +354,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 				cnt++;
 			gameScreen[x][y - 1] = 0;
 
-			for (int i = x; i > 1; i--) 
+			for (int i = x; i > 1; i--)
 				gameScreen[i][y - 1] = gameScreen[i - 1][y - 1];
 			gameScreen[1][y - 1] = 0;
 		}
@@ -370,7 +369,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 			gameScreen[i][y] = gameScreen[i - 1][y];
 			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
 		}
-		gameScreen[x][y] = gameScreen[x][y + 1] = 0;
+		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
 
 		res = 1;
 	}
@@ -378,7 +377,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 	if (x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = gameScreen[x - 1][y] + gameScreen[x + 1][y];
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
-		
+
 		res = 1;
 		if (gameScreen[x + 1][y] >= 64) {
 			if (cnt == 1)
@@ -394,7 +393,7 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 		if (gameScreen[x + 1][y] == 0)
 			gameScreen[x + 1][y] = 999;
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
-		
+
 		res = 1;
 	}
 
