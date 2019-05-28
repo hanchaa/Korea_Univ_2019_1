@@ -112,7 +112,7 @@ int getRandomNumber() {
 char getRandomOper() {
 	int tmp = rand() % 2;
 
-	if (currentStage == 1)
+	if (currentStage >= 1 && currentStage <= 3)
 		tmp = 0;
 
 	if (tmp == 0)
@@ -133,9 +133,18 @@ void newBlock() {
 
 	// You should modify these example values for complete this function.
 	int pos = rand() % 4;
+	if (block.nextnum == 0 && block2.nextnum == 0) {
+		block.num = getRandomNumber(); // example of setting value
+		block2.num = getRandomOper();
+	}
+	else {
+		block.num = block.nextnum;
+		block2.num = block2.nextnum;
+	}
 
-	block.num = getRandomNumber(); // example of setting value
-	block2.num = getRandomOper();  // example of setting value
+	block.nextnum = getRandomNumber();
+	block2.nextnum = getRandomOper();
+
 
 	block.pos_x = 0; // example value of position 예시값
 	block.pos_y = pos; // example value of position 예시값
@@ -167,16 +176,40 @@ int takeBlockControl() {
 			case RIGHT:
 				moveBlock(RIGHT);
 				break;
+
+			case DOWN:
+				moveBlock(DOWN);
+				break;
 			}
 		}
 		else { //방향키가 아닌경우  Cases for other keys
 			switch (input_blockControl) {
-				/*
+			case SPACE:
+				if (block.pos_x < X - 1 && gameScreen[block.pos_x + 1][block.pos_y] == 0 && block2.pos_x < X - 1 && gameScreen[block2.pos_x + 1][block2.pos_y] == 0) {
+					for (int i = X - 1; i > 0; i--) {
+						if (gameScreen[i][block.pos_y] == 0) {
+							gameScreen[i][block.pos_y] = block.num;
+							gameScreen[block.pos_x][block.pos_y] = 0;
+							block.pos_x = i;
+							block.isactive = 0;
+							break;
+						}
+					}
 
-				Implement hard drop
-				하드드랍을 구현하세요
+					for (int i = X - 1; i > 0; i--) {
+						if (gameScreen[i][block2.pos_y] == 0) {
+							gameScreen[i][block2.pos_y] = block2.num;
+							gameScreen[block2.pos_x][block2.pos_y] = 0;
+							block2.pos_x = i;
+							block2.isactive = 0;
+							break;
+						}
+					}
 
-				*/
+					score += 5;
+				}
+				break;
+
 			case P:
 			case p:
 				printPauseScreen();
@@ -192,41 +225,84 @@ int takeBlockControl() {
 }
 
 void flipBlock(void) {//좌우 반전함수		Block flipping function
-		/*
+	int tmp = block.pos_y;
+	block.pos_y = block2.pos_y;
+	block2.pos_y = tmp;
 
-		Fliping blocks when the 'up' butten is pressed.
-		위로 버튼이 눌렸을경우 블록을 바꿉니다.
-
-		*/
+	gameScreen[block.pos_x][block.pos_y] = block.num;
+	gameScreen[block2.pos_x][block2.pos_y] = block2.num;
 }
 
 void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks for left, reight, and down input
 	switch (direction) {
 	case LEFT:
-		/*
+		if (block.pos_y > 0 && gameScreen[block.pos_x][block.pos_y - 1] == 0) {
+			gameScreen[block.pos_x][block.pos_y - 1] = block.num;
+			gameScreen[block.pos_x][block.pos_y] = 0;
+			block.pos_y--;
 
-		implement left action
+			gameScreen[block2.pos_x][block2.pos_y - 1] = block2.num;
+			gameScreen[block2.pos_x][block2.pos_y] = 0;
+			block2.pos_y--;
+		}
 
-		*/
+		else if (block2.pos_y > 0 && gameScreen[block2.pos_x][block2.pos_y - 1] == 0) {
+			gameScreen[block2.pos_x][block2.pos_y - 1] = block2.num;
+			gameScreen[block2.pos_x][block2.pos_y] = 0;
+			block2.pos_y--;
+
+			gameScreen[block.pos_x][block.pos_y - 1] = block.num;
+			gameScreen[block.pos_x][block.pos_y] = 0;
+			block.pos_y--;
+		}
 
 		break;
+
 	case RIGHT:
-		/*
+		if (block2.pos_y < Y - 1 && gameScreen[block2.pos_x][block2.pos_y +1] == 0) {
+			gameScreen[block2.pos_x][block2.pos_y + 1] = block2.num;
+			gameScreen[block2.pos_x][block2.pos_y] = 0;
+			block2.pos_y++;
 
-		implement right action
+			gameScreen[block.pos_x][block.pos_y + 1] = block.num;
+			gameScreen[block.pos_x][block.pos_y] = 0;
+			block.pos_y++;
+		}
 
-		*/
+		else if (block.pos_y < Y - 1 && gameScreen[block.pos_x][block.pos_y + 1] == 0) {
+			gameScreen[block.pos_x][block.pos_y + 1] = block.num;
+			gameScreen[block.pos_x][block.pos_y] = 0;
+			block.pos_y++;
+
+			gameScreen[block2.pos_x][block2.pos_y + 1] = block2.num;
+			gameScreen[block2.pos_x][block2.pos_y] = 0;
+			block2.pos_y++;
+		}
+
 		break;
+
 	case DOWN:
 		if (block.pos_x < X - 1 && gameScreen[block.pos_x + 1][block.pos_y] == 0) {
 			gameScreen[block.pos_x + 1][block.pos_y] = block.num;
 			gameScreen[block.pos_x][block.pos_y] = 0;
 			block.pos_x++;
+
+			if (block.pos_x == X - 1 || gameScreen[block.pos_x + 1][block.pos_y] != 0)
+				block.isactive = 0;
 		}
 		else {
 			block.isactive = 0;
+			for (int i = X - 1; block2.isactive && i > 0; i--) {
+				if (gameScreen[i][block2.pos_y] == 0) {
+					gameScreen[i][block2.pos_y] = block2.num;
+					gameScreen[block2.pos_x][block2.pos_y] = 0;
+					block2.pos_x = i;
+					block2.isactive = 0;
+					break;
+				}
+			}
 		}
-
+		
 		if (block2.pos_x < X - 1 && gameScreen[block2.pos_x + 1][block2.pos_y] == 0) {
 			gameScreen[block2.pos_x + 1][block2.pos_y] = block2.num;
 			gameScreen[block2.pos_x][block2.pos_y] = 0;
@@ -234,13 +310,22 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 		}
 		else {
 			block2.isactive = 0;
+			for (int i = X - 1; block.isactive && i > 0; i--) {
+				if (gameScreen[i][block.pos_y] == 0) {
+					gameScreen[i][block.pos_y] = block.num;
+					gameScreen[block.pos_x][block.pos_y] = 0;
+					block.pos_x = i;
+					block.isactive = 0;
+					break;
+				}
+			}
 		}
 	}
 }
 
 int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking merging condition
 	 /*
-
+	
 	 조건확인하여 연산하고 Merging
 	  64 생성시 점수 계산
 
@@ -248,8 +333,50 @@ int checkAdjacentBlock(int x, int y) { //Merging 조건 확인 함수		Checking mergin
 	 If 64 is found, player earns points.
 
 	 */
+	int res = 0;
 
-	return 0; //example value. 0 for none, 1 for mergable.  예시값. 0이면 합칠 블록이 없고, 1이면 있음.
+	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '+' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
+		gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 1];
+		gameScreen[x][y] = gameScreen[x][y + 1] = 0;
+		
+		for (int i = x; i > 1; i--) {
+			gameScreen[i][y] = gameScreen[i - 1][y];
+			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
+		}
+		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
+
+		res = 1;
+	}
+
+	if (y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
+		gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 1]);
+		if (gameScreen[x][y - 1] == 0)
+			gameScreen[x][y - 1] = 999;
+
+		for (int i = x; i > 1; i--) {
+			gameScreen[i][y] = gameScreen[i - 1][y];
+			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
+		}
+		gameScreen[x][y] = gameScreen[x][y + 1] = 0;
+
+		res = 1;
+	}
+
+	if (x < 7 && x > 1 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+		gameScreen[x + 1][y] = gameScreen[x - 1][y] + gameScreen[x + 1][y];
+		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
+		res = 1;
+	}
+
+	if (x < 7 && x > 1 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+		gameScreen[x + 1][y] = abs(gameScreen[x - 1][y] - gameScreen[x + 1][y]);
+		if (gameScreen[x + 1][y] == 0)
+			gameScreen[x + 1][y] = 999;
+		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
+		res = 1;
+	}
+
+	return res; //example value. 0 for none, 1 for mergable.  예시값. 0이면 합칠 블록이 없고, 1이면 있음.
 }
 
 void checkNumber(int x, int y) {
