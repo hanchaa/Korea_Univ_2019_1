@@ -3,9 +3,11 @@
 #include <stdlib.h>
 #include <conio.h>
 
+#define len 100
+
 struct employee {
 	int employee_id;
-	char name[100];
+	char* name;
 };
 
 void add(FILE *fp);
@@ -55,13 +57,14 @@ int main(void) {
 void add(FILE *fp) {
 	struct employee data = { 0, "" };
 	int id;
+	char name[len] = "";
 
 	printf("\nENTER THE EMPLOYEE ID :\n");
 	scanf("%d", &id);
 	getchar();
 
-	fseek(fp, (id - 1) * sizeof(struct employee), SEEK_SET);
-	fread(&data, sizeof(struct employee), 1, fp);
+	fseek(fp, (id - 1) * (sizeof(data.employee_id) + sizeof(name)), SEEK_SET);
+	fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
 
 	if (data.employee_id != 0)
 		printf("Employee id %d already exist\n\n", id);
@@ -70,10 +73,13 @@ void add(FILE *fp) {
 		data.employee_id = id;
 
 		printf("ENTER THE EMPLOYEE NAME :\n");
-		fgets(data.name, 100, stdin);
+		fgets(name, len, stdin);
 
-		fseek(fp, (data.employee_id - 1) * sizeof(struct employee), SEEK_SET);
-		fwrite(&data, sizeof(struct employee), 1, fp);
+		data.name = name;
+
+		fseek(fp, (data.employee_id - 1) * (sizeof(data.employee_id) + sizeof(name)), SEEK_SET);
+		fwrite(&data.employee_id, sizeof(data.employee_id), 1, fp);
+		fwrite(data.name, sizeof(name), 1, fp);
 		printf("\n");
 	}
 }
@@ -86,8 +92,11 @@ void disp(FILE *fp) {
 	printf("============================\n");
 	while (!feof(fp)) {
 		struct employee data = { 0, "" };
+		char name[len] = "";
 
-		fread(&data, sizeof(struct employee), 1, fp);
+		fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
+		fread(name, sizeof(name), 1, fp);
+		data.name = name;
 
 		if (data.employee_id != 0)
 			printf("%d\t%s", data.employee_id, data.name);
@@ -102,13 +111,14 @@ void disp(FILE *fp) {
 void upd(FILE *fp) {
 	int id;
 	struct employee data = { 0, "" };
+	char name[len] = "";
 
 	printf("\nENTER THE EMPLOYEE ID FOR UPDATE :\n");
 	scanf("%d", &id);
 	getchar();
 	
-	fseek(fp, (id - 1) * sizeof(struct employee), SEEK_SET);
-	fread(&data, sizeof(struct employee), 1, fp);
+	fseek(fp, (id - 1) * (sizeof(struct employee) + sizeof(name)), SEEK_SET);
+	fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
 
 	if (data.employee_id == 0)
 		printf("Employee id %d does not exist\n\n", id);
@@ -116,10 +126,11 @@ void upd(FILE *fp) {
 		data.employee_id = id;
 
 		printf("ENTER THE EMPLOYEE NAME TO BE UPDATED :\n");
-		fgets(data.name, 100, stdin);
+		fgets(name, len, stdin);
+		data.name = name;
 
-		fseek(fp, (id - 1) * sizeof(struct employee), SEEK_SET);
-		fwrite(&data, sizeof(struct employee), 1, fp);
+		fseek(fp, (id - 1) * (sizeof(data.employee_id) + sizeof(name)) + sizeof(data.employee_id), SEEK_SET);
+		fwrite(data.name, sizeof(name), 1, fp);
 
 		printf("\n");
 	}
