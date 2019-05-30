@@ -111,13 +111,14 @@ void disp(FILE *fp) {
 void upd(FILE *fp) {
 	int id;
 	struct employee data = { 0, "" };
+
 	char name[len] = "";
 
 	printf("\nENTER THE EMPLOYEE ID FOR UPDATE :\n");
 	scanf("%d", &id);
 	getchar();
 	
-	fseek(fp, (id - 1) * (sizeof(struct employee) + sizeof(name)), SEEK_SET);
+	fseek(fp, (id - 1) * (sizeof(data.employee_id) + sizeof(name)), SEEK_SET);
 	fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
 
 	if (data.employee_id == 0)
