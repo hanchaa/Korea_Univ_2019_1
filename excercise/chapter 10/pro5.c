@@ -23,15 +23,14 @@ typedef struct class_report {
 
 void back_to_menu();
 void view(const Grade * student, int cnt);
-int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt);
+int input(Grade * student, Report * data, Report * sum, Report * avg, Report * mid, int cnt);
 void rep(Report * avg, Report * mid, int cnt);
 void grade(Grade * student, int cnt);
 
 int main(void) {
 	int menu, cnt = 0;
 	Grade student[79];
-	Report data[79], avg, mid;
-	avg.attendance = avg.midterm_exam = avg.final_exam = avg.assignment = avg.term_project = avg.total_score = 0;
+	Report data[79], sum = { 0, 0, 0, 0, 0, 0 }, mid = { 0, 0, 0, 0, 0, 0 }, avg = { 0, 0, 0, 0, 0, 0 };
 
 	while (1) {
 		system("cls");
@@ -58,7 +57,7 @@ int main(void) {
 			view(student, cnt);
 
 		else if (menu == 2)
-			cnt = input(student, data, &avg, &mid, cnt);
+			cnt = input(student, data, &sum, &avg, &mid, cnt);
 
 		else if (menu == 3)
 			rep(&avg, &mid, cnt);
@@ -94,7 +93,7 @@ void view(const Grade * student, int cnt) {
 
 	else {
 		for (int i = 0; i < cnt; i++)
-			printf("%d       %s\n", student[i].student_id, student[i].name);
+			printf("%d       %s", student[i].student_id, student[i].name);
 	}
 
 	printf("===================================\n");
@@ -102,16 +101,35 @@ void view(const Grade * student, int cnt) {
 	back_to_menu();
 }
 
-int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
+int input(Grade * student, Report * data, Report * sum, Report * avg, Report * mid, int cnt) {
 	system("cls");
 
 	printf("===================================\n");
 	if (cnt < 79) {
 		printf("Student Name : ");
-		scanf_s("%s", student[cnt].name, 30);
+		gets();
+		fgets(student[cnt].name, 30, stdin);
 
-		printf("Student ID : ");
-		scanf_s("%d", &student[cnt].student_id);
+		while (1) {
+			printf("Student ID : ");
+			scanf_s("%d", &student[cnt].student_id);
+			
+			int chk = 0;
+			for(int i = 0;i < cnt;i++)
+				if (student[cnt].student_id == student[i].student_id) {
+					chk = 1;
+					break;
+				}
+			
+			if (student[cnt].student_id / 1000000000 == 0 || student[cnt].student_id < 0)
+				printf("Please input 10 digit number\n");
+
+			else if (chk == 1)
+				printf("Student ID already exist!\n");
+
+			else
+				break;
+		}
 
 		while (1) {
 			printf("attendance (0 ~ 10) : ");
@@ -123,7 +141,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		}
 
 		data[cnt].attendance = student[cnt].attendance;
-		avg->attendance += student[cnt].attendance;
+		sum->attendance += student[cnt].attendance;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].attendance < data[i - 1].attendance) {
@@ -138,7 +156,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		else
 			mid->attendance = data[cnt / 2].attendance;
 
-		while(1) {
+		while (1) {
 			printf("Assignment (0 ~ 10) : ");
 			scanf_s("%d", &student[cnt].assignment);
 			if (student[cnt].assignment < 0 || student[cnt].assignment > 10)
@@ -148,7 +166,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		}
 
 		data[cnt].assignment = student[cnt].assignment;
-		avg->assignment += student[cnt].assignment;
+		sum->assignment += student[cnt].assignment;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].assignment < data[i - 1].assignment) {
@@ -173,7 +191,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		}
 
 		data[cnt].midterm_exam = student[cnt].midterm_exam;
-		avg->midterm_exam += student[cnt].midterm_exam;
+		sum->midterm_exam += student[cnt].midterm_exam;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].midterm_exam < data[i - 1].midterm_exam) {
@@ -198,7 +216,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		}
 
 		data[cnt].final_exam = student[cnt].final_exam;
-		avg->final_exam += student[cnt].final_exam;
+		sum->final_exam += student[cnt].final_exam;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].final_exam < data[i - 1].final_exam) {
@@ -223,7 +241,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 		}
 
 		data[cnt].term_project = student[cnt].term_project;
-		avg->term_project += student[cnt].term_project;
+		sum->term_project += student[cnt].term_project;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].term_project < data[i - 1].term_project) {
@@ -239,7 +257,7 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 			mid->term_project = data[cnt / 2].term_project;
 
 		data[cnt].total_score = student[cnt].total_score = student[cnt].attendance + student[cnt].assignment + student[cnt].midterm_exam + student[cnt].final_exam + student[cnt].term_project;
-		avg->total_score += student[cnt].total_score;
+		sum->total_score += student[cnt].total_score;
 
 		for (int i = cnt; i > 0; i--) {
 			if (data[i].total_score < data[i - 1].total_score) {
@@ -253,8 +271,15 @@ int input(Grade * student, Report * data, Report * avg, Report * mid, int cnt) {
 			mid->total_score = (data[cnt / 2].total_score + data[cnt / 2 + 1].total_score) / 2;
 		else
 			mid->total_score = data[cnt / 2].total_score;
-
+		
 		cnt++;
+
+		avg->assignment = sum->assignment / cnt;
+		avg->attendance = sum->attendance / cnt;
+		avg->final_exam = sum->final_exam / cnt;
+		avg->midterm_exam = sum->midterm_exam / cnt;
+		avg->term_project = sum->term_project / cnt;
+		avg->total_score = sum->total_score / cnt;
 	}
 
 	else
@@ -275,12 +300,12 @@ void rep(Report * avg, Report * mid, int cnt) {
 	else {
 		printf(" Field        Average  | Median\n");
 		printf("===================================\n");
-		printf("Attendance  :    %2d    |     %2d\n", avg->attendance / cnt, mid->attendance);
-		printf("Assignment  :    %2d    |     %2d\n", avg->assignment / cnt, mid->assignment);
-		printf("Mideterm    :    %2d    |     %2d\n", avg->midterm_exam / cnt, mid->midterm_exam);
-		printf("Final       :    %2d    |     %2d\n", avg->final_exam / cnt, mid->final_exam);
-		printf("Term Proejct:    %2d    |     %2d\n", avg->term_project / cnt, mid->term_project);
-		printf("Total       :    %2d    |     %2d\n\n", avg->total_score / cnt, mid->total_score);
+		printf("Attendance  :    %2d    |     %2d\n", avg->attendance, mid->attendance);
+		printf("Assignment  :    %2d    |     %2d\n", avg->assignment, mid->assignment);
+		printf("Mideterm    :    %2d    |     %2d\n", avg->midterm_exam, mid->midterm_exam);
+		printf("Final       :    %2d    |     %2d\n", avg->final_exam, mid->final_exam);
+		printf("Term Proejct:    %2d    |     %2d\n", avg->term_project, mid->term_project);
+		printf("Total       :    %2d    |     %2d\n\n", avg->total_score, mid->total_score);
 	}
 	printf("===================================\n");
 
