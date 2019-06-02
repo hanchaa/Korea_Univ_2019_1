@@ -113,14 +113,14 @@ int input(Grade * student, Report * data, Report * sum, Report * avg, Report * m
 		while (1) {
 			printf("Student ID : ");
 			scanf_s("%d", &student[cnt].student_id);
-			
+
 			int chk = 0;
-			for(int i = 0;i < cnt;i++)
+			for (int i = 0; i < cnt; i++)
 				if (student[cnt].student_id == student[i].student_id) {
 					chk = 1;
 					break;
 				}
-			
+
 			if (student[cnt].student_id / 1000000000 == 0 || student[cnt].student_id < 0)
 				printf("Please input 10 digit number\n");
 
@@ -271,7 +271,7 @@ int input(Grade * student, Report * data, Report * sum, Report * avg, Report * m
 			mid->total_score = (data[cnt / 2].total_score + data[cnt / 2 + 1].total_score) / 2;
 		else
 			mid->total_score = data[cnt / 2].total_score;
-		
+
 		cnt++;
 
 		avg->assignment = sum->assignment / cnt;
@@ -298,14 +298,14 @@ void rep(Report * avg, Report * mid, int cnt) {
 	if (cnt == 0)
 		printf("There are no registered students\n");
 	else {
-		printf(" Field        Average  | Median\n");
+		printf(" Field        Average   | Median\n");
 		printf("===================================\n");
-		printf("Attendance  :    %2d    |     %2d\n", avg->attendance, mid->attendance);
-		printf("Assignment  :    %2d    |     %2d\n", avg->assignment, mid->assignment);
-		printf("Mideterm    :    %2d    |     %2d\n", avg->midterm_exam, mid->midterm_exam);
-		printf("Final       :    %2d    |     %2d\n", avg->final_exam, mid->final_exam);
-		printf("Term Proejct:    %2d    |     %2d\n", avg->term_project, mid->term_project);
-		printf("Total       :    %2d    |     %2d\n\n", avg->total_score, mid->total_score);
+		printf("Attendance  :    %3d    |     %3d\n", avg->attendance, mid->attendance);
+		printf("Assignment  :    %3d    |     %3d\n", avg->assignment, mid->assignment);
+		printf("Mideterm    :    %3d    |     %3d\n", avg->midterm_exam, mid->midterm_exam);
+		printf("Final       :    %3d    |     %3d\n", avg->final_exam, mid->final_exam);
+		printf("Term Proejct:    %3d    |     %3d\n", avg->term_project, mid->term_project);
+		printf("Total       :    %3d    |     %3d\n\n", avg->total_score, mid->total_score);
 	}
 	printf("===================================\n");
 
