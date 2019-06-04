@@ -58,6 +58,7 @@ void add(FILE *fp) {
 	struct employee data = { 0, "" };
 	int id;
 	char name[len] = "";
+	data.name = name;
 
 	printf("\nENTER THE EMPLOYEE ID :\n");
 	scanf("%d", &id);
@@ -73,9 +74,7 @@ void add(FILE *fp) {
 		data.employee_id = id;
 
 		printf("ENTER THE EMPLOYEE NAME :\n");
-		fgets(name, len, stdin);
-
-		data.name = name;
+		fgets(data.name, len, stdin);
 
 		fseek(fp, (data.employee_id - 1) * (sizeof(data.employee_id) + sizeof(name)), SEEK_SET);
 		fwrite(&data.employee_id, sizeof(data.employee_id), 1, fp);
@@ -93,10 +92,10 @@ void disp(FILE *fp) {
 	while (!feof(fp)) {
 		struct employee data = { 0, "" };
 		char name[len] = "";
+		data.name = name;
 
 		fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
-		fread(name, sizeof(name), 1, fp);
-		data.name = name;
+		fread(data.name, sizeof(name), 1, fp);
 
 		if (data.employee_id != 0)
 			printf("%d\t%s", data.employee_id, data.name);
@@ -113,11 +112,12 @@ void upd(FILE *fp) {
 	struct employee data = { 0, "" };
 
 	char name[len] = "";
+	data.name = name;
 
 	printf("\nENTER THE EMPLOYEE ID FOR UPDATE :\n");
 	scanf("%d", &id);
 	getchar();
-	
+
 	fseek(fp, (id - 1) * (sizeof(data.employee_id) + sizeof(name)), SEEK_SET);
 	fread(&data.employee_id, sizeof(data.employee_id), 1, fp);
 
@@ -127,8 +127,7 @@ void upd(FILE *fp) {
 		data.employee_id = id;
 
 		printf("ENTER THE EMPLOYEE NAME TO BE UPDATED :\n");
-		fgets(name, len, stdin);
-		data.name = name;
+		fgets(data.name, len, stdin);
 
 		fseek(fp, (id - 1) * (sizeof(data.employee_id) + sizeof(name)) + sizeof(data.employee_id), SEEK_SET);
 		fwrite(data.name, sizeof(name), 1, fp);
