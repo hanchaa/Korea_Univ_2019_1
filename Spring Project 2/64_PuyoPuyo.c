@@ -347,7 +347,7 @@ int checkAdjacentBlock(int x, int y, int z) { //Merging 조건 확인 함수		Checking
 		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
 
 		res = 1;
-		if (gameScreen[x][y - 1] >= 64) {
+		if (gameScreen[x][y - 1] == 64) {
 			if (cnt == 1)
 				score += 10;
 			else
@@ -379,7 +379,7 @@ int checkAdjacentBlock(int x, int y, int z) { //Merging 조건 확인 함수		Checking
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
 
 		res = 1;
-		if (gameScreen[x + 1][y] >= 64) {
+		if (gameScreen[x + 1][y] == 64) {
 			if (cnt == 1)
 				score += 10;
 			else
@@ -402,6 +402,7 @@ int checkAdjacentBlock(int x, int y, int z) { //Merging 조건 확인 함수		Checking
 
 void checkNumber() {
 
+	printGameScreen();
 	Sleep(200);
 	for (int k = 1; k <= 4; k++) {
 		for (int i = X - 1; i > 0; i--) {
