@@ -54,14 +54,14 @@ int getRandomNumber();
 void newBlock();
 
 /* block control and merging functions  */
-int takeBlockControl();				//블록 조작 방향 입력 받음			Taking input for moving blocks
+int takeBlockControl(int*);				//블록 조작 방향 입력 받음			Taking input for moving blocks
 void flipBlock();					// Fliping function.
 void moveBlock(int direction);		// 입력 받은 방향으로 블록 이동		Moving blocks to corresponding direction of input key.
 int checkAdjacentBlock(int, int, int, int*);	//Checking adjacent blocks for merging conditions
 void checkNumber(int*);			// 블록 인접 블록숫자 확인			Checking number of adjacent block
 
 		/* game flow control functions */
-int isStageEnd();  // 스테이지가 끝났는지 체크. (스테이지 클리어, 모든 스테이지 클리어, 패배)         Checking condition for end of the stage. (stage clear, all stage clear, lost)
+int isStageEnd(int*);  // 스테이지가 끝났는지 체크. (스테이지 클리어, 모든 스테이지 클리어, 패배)         Checking condition for end of the stage. (stage clear, all stage clear, lost)
 void setGameFlow(int type); // 각 스테이지에 맞는 게임 환경 세팅.   Setting up status values for each stages.
 
 
@@ -85,7 +85,7 @@ void main() {
 	while (1) {
 
 		for (int j = 0; j < 5; j++) {
-			if (takeBlockControl() == SPACE) break;
+			if (takeBlockControl(&cnt) == SPACE) break;
 			printGameScreen();
 			Sleep(time_interval_moveBlockDown);
 		}
@@ -93,7 +93,7 @@ void main() {
 		if (!block.isactive && !block2.isactive) { // 이 부분은 떨어지는 블록이 바닥이나 다른블록에 닿았는지 체크합니다. This statement is cheking that wether the falling blocks got touched by floor or other blocks.
 			checkNumber(&cnt);
 
-			if (isStageEnd() != 1)
+			if (isStageEnd(&cnt) != 1)
 				newBlock();
 		}
 	}
@@ -160,7 +160,7 @@ void newBlock() {
 	gameScreen[block2.pos_x][block2.pos_y] = block2.num;
 }
 
-int takeBlockControl() {
+int takeBlockControl(int *cnt) {
 	int input_blockControl = 0;
 
 	if (_kbhit()) {
@@ -219,6 +219,7 @@ int takeBlockControl() {
 				break;
 			case ESC:
 				printEndScreen(0);
+				*cnt = 0;
 				break;
 			}
 		}
@@ -487,7 +488,7 @@ void setGameFlow(int setGameFlowType) { // Implement this function to set condit
 	}
 }
 
-int isStageEnd() { // 스테이지가 끝났는지 체크      Checking if stage ended up or not.
+int isStageEnd(int *cnt) { // 스테이지가 끝났는지 체크      Checking if stage ended up or not.
 	for (int i = X - 1; i > 1; i--) {
 		for (int j = 0; j < Y; j++) {
 			if (score >= goal) {
@@ -499,6 +500,7 @@ int isStageEnd() { // 스테이지가 끝났는지 체크      Checking if stage ended up o
 	for (int i = 0; i < Y; i++) {
 		if (gameScreen[0][i] != 0) { //패배			Game over
 			printEndScreen(0);
+			*cnt = 0;
 			return 1;
 		}
 	}
