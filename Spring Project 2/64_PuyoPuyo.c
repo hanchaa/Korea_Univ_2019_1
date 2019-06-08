@@ -347,6 +347,29 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
 		}
 		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
+		
+		if (y == 1 && gameScreen[x][y + 2] == '+' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
+			gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 3];
+
+			for (int i = x; i > 1; i--) {
+				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
+				gameScreen[i][y + 3] = gameScreen[i - 1][y + 3];
+			}
+			gameScreen[1][y + 2] = gameScreen[1][y + 3] = 0;
+		}
+
+		if (y == 1 && gameScreen[x][y + 2] == '-' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
+			gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 3]);
+			
+			for (int i = x; i > 1; i--) {
+				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
+				gameScreen[i][y + 3] = gameScreen[i - 1][y + 3];
+			}
+			gameScreen[1][y + 2] = gameScreen[1][y + 3] = 0;
+		}
+
+		if (gameScreen[x][y - 1] == 0)
+			gameScreen[x][y - 1] = 999;
 
 		res = 1;
 		if (gameScreen[x][y - 1] == 64) {
@@ -362,10 +385,8 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 		}
 	}
 
-	if (z == 2 && y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
+	if (z == 1 && y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
 		gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 1]);
-		if (gameScreen[x][y - 1] == 0)
-			gameScreen[x][y - 1] = 999;
 
 		for (int i = x; i > 1; i--) {
 			gameScreen[i][y] = gameScreen[i - 1][y];
@@ -373,6 +394,30 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 		}
 		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
 
+		if (y == 1 && gameScreen[x][y + 2] == '+' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
+			gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 3];
+
+			for (int i = x; i > 1; i--) {
+				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
+				gameScreen[i][y + 3] = gameScreen[i - 1][y + 3];
+			}
+			gameScreen[1][y + 2] = gameScreen[1][y + 3] = 0;
+		}
+
+		if (y == 1 && gameScreen[x][y + 2] == '-' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
+			gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 3]);
+
+			for (int i = x; i > 1; i--) {
+				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
+				gameScreen[i][y + 3] = gameScreen[i - 1][y + 3];
+			}
+			gameScreen[1][y + 2] = gameScreen[1][y + 3] = 0;
+		}
+
+
+		if (gameScreen[x][y - 1] == 0)
+			gameScreen[x][y - 1] = 999;
+
 		res = 1;
 		if (gameScreen[x][y - 1] == 64) {
 			if (*ptr == 1)
@@ -387,7 +432,7 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 		}
 	}
 
-	if (z == 3 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (z == 2 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '+' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = gameScreen[x - 1][y] + gameScreen[x + 1][y];
 		gameScreen[x][y] = gameScreen[x - 1][y] = 0;
 
@@ -401,7 +446,7 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 		}
 	}
 
-	if (z == 4 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
+	if (z == 2 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
 		gameScreen[x + 1][y] = abs(gameScreen[x - 1][y] - gameScreen[x + 1][y]);
 		if (gameScreen[x + 1][y] == 0)
 			gameScreen[x + 1][y] = 999;
@@ -424,14 +469,13 @@ void checkNumber(int *ptr) {
 
 	printGameScreen();
 	Sleep(200);
-	for (int k = 1; k <= 4; k++) {
+	for (int k = 1; k <= 2; k++) {
 		for (int i = X - 1; i > 0; i--) {
-			for (int j = Y - 1; j >= 0; j--) {
+			for (int j = 0; j < Y; j++) {
 				if (checkAdjacentBlock(i, j, k, ptr)) {
 					printGameScreen();
-					Sleep(200);
 					i = X;
-					k = 1;
+					Sleep(200);
 					break;
 				}
 			}
