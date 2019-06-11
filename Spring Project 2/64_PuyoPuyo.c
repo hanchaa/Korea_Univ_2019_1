@@ -189,29 +189,29 @@ int takeBlockControl(int *cnt) {
 			switch (input_blockControl) {
 			case SPACE:
 				if (block.pos_x < X - 1 && gameScreen[block.pos_x + 1][block.pos_y] == 0 && block2.pos_x < X - 1 && gameScreen[block2.pos_x + 1][block2.pos_y] == 0) {
-					for (int i = X - 1; i > 0; i--) {
-						if (gameScreen[i][block.pos_y] == 0) {
-							gameScreen[i][block.pos_y] = block.num;
-							gameScreen[block.pos_x][block.pos_y] = 0;
-							block.pos_x = i;
-							block.isactive = 0;
-							break;
-						}
-					}
+					int i;
 
-					for (int i = X - 1; i > 0; i--) {
-						if (gameScreen[i][block2.pos_y] == 0) {
-							gameScreen[i][block2.pos_y] = block2.num;
-							gameScreen[block2.pos_x][block2.pos_y] = 0;
-							block2.pos_x = i;
-							block2.isactive = 0;
+					for (i = block.pos_x + 1; i < X; i++)
+						if (gameScreen[i][block.pos_y] != 0)
 							break;
-						}
-					}
+
+					gameScreen[i - 1][block.pos_y] = gameScreen[block.pos_x][block.pos_y];
+					gameScreen[block.pos_x][block.pos_y] = 0;
+					block.pos_x = i - 1;
+					block.isactive = 0;
+
+					for (i = block2.pos_x + 1; i < X; i++) 
+						if (gameScreen[i][block2.pos_y] != 0) 
+							break;
+
+					gameScreen[i - 1][block2.pos_y] = gameScreen[block2.pos_x][block2.pos_y];
+					gameScreen[block2.pos_x][block2.pos_y] = 0;
+					block2.pos_x = i - 1;
+					block2.isactive = 0;
 
 					score += 5;
 				}
-				break;
+				return SPACE;
 
 			case P:
 			case p:
@@ -290,21 +290,20 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 			gameScreen[block.pos_x + 1][block.pos_y] = block.num;
 			gameScreen[block.pos_x][block.pos_y] = 0;
 			block.pos_x++;
-
-			//if (block.pos_x == X - 1 || gameScreen[block.pos_x + 1][block.pos_y] != 0)
-				//block.isactive = 0;
 		}
 		else {
+			int i;
 			block.isactive = 0;
-			for (int i = X - 1; block2.isactive && i > 0; i--) {
-				if (gameScreen[i][block2.pos_y] == 0) {
-					gameScreen[i][block2.pos_y] = block2.num;
-					gameScreen[block2.pos_x][block2.pos_y] = 0;
-					block2.pos_x = i;
-					block2.isactive = 0;
+			for (i = block2.pos_x + 1; i < X ; i++)
+				if (gameScreen[i][block2.pos_y] != 0) 
 					break;
-				}
+
+			if(i - 1 != block2.pos_x){
+				gameScreen[i - 1][block2.pos_y] = gameScreen[block2.pos_x][block2.pos_y];
+				gameScreen[block2.pos_x][block2.pos_y] = 0;
+				block2.pos_x = i - 1;
 			}
+			block2.isactive = 0;
 		}
 
 		if (block2.pos_x < X - 1 && gameScreen[block2.pos_x + 1][block2.pos_y] == 0) {
@@ -313,14 +312,19 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 			block2.pos_x++;
 		}
 		else {
+			int i;
 			block2.isactive = 0;
-			for (int i = block.pos_x + 1; i < X; i++) {
+			for (i = block.pos_x + 1; i < X; i++)
 				if (gameScreen[i][block.pos_y] != 0)
 					break;
 
+			if (i - 1 != block.pos_x) {
 				gameScreen[i - 1][block.pos_y] = gameScreen[block.pos_x][block.pos_y];
 				gameScreen[block.pos_x][block.pos_y] = 0;
+				block.pos_x = i - 1;
 			}
+			
+			block.isactive = 0;
 		}
 	}
 }
@@ -345,7 +349,7 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
 		}
 		gameScreen[0][y] = gameScreen[0][y + 1] = 0;
-		
+
 		if (y == 1 && gameScreen[x][y + 2] == '+' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
 			gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 3];
 
@@ -358,7 +362,7 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 
 		if (y == 1 && gameScreen[x][y + 2] == '-' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
 			gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 3]);
-			
+
 			for (int i = x; i > 0; i--) {
 				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
 				gameScreen[i][y + 3] = gameScreen[i - 1][y + 3];
