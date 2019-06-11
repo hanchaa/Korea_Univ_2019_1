@@ -386,16 +386,8 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 	}
 
 	if (z == 1 && y < 4 && y > 0 && gameScreen[x][y - 1] != 0 && gameScreen[x][y] == '-' && gameScreen[x][y + 1] != 0 && gameScreen[x][y - 1] % 2 == 0 && gameScreen[x][y + 1] % 2 == 0) {
-		gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 1]);
-
-		for (int i = x; i > 1; i--) {
-			gameScreen[i][y] = gameScreen[i - 1][y];
-			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
-		}
-		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
-
 		if (y == 1 && gameScreen[x][y + 2] == '+' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
-			gameScreen[x][y - 1] = gameScreen[x][y - 1] + gameScreen[x][y + 3];
+			gameScreen[x][y + 1] = gameScreen[x][y + 1] + gameScreen[x][y + 3];
 
 			for (int i = x; i > 1; i--) {
 				gameScreen[i][y + 2] = gameScreen[i - 1][y + 2];
@@ -403,6 +395,14 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 			}
 			gameScreen[1][y + 2] = gameScreen[1][y + 3] = 0;
 		}
+
+		gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 1]);
+
+		for (int i = x; i > 1; i--) {
+			gameScreen[i][y] = gameScreen[i - 1][y];
+			gameScreen[i][y + 1] = gameScreen[i - 1][y + 1];
+		}
+		gameScreen[1][y] = gameScreen[1][y + 1] = 0;
 
 		if (y == 1 && gameScreen[x][y + 2] == '-' && gameScreen[x][y + 3] != 0 && gameScreen[x][y + 3] % 2 == 0) {
 			gameScreen[x][y - 1] = abs(gameScreen[x][y - 1] - gameScreen[x][y + 3]);
