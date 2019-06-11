@@ -291,8 +291,8 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 			gameScreen[block.pos_x][block.pos_y] = 0;
 			block.pos_x++;
 
-			if (block.pos_x == X - 1 || gameScreen[block.pos_x + 1][block.pos_y] != 0)
-				block.isactive = 0;
+			//if (block.pos_x == X - 1 || gameScreen[block.pos_x + 1][block.pos_y] != 0)
+				//block.isactive = 0;
 		}
 		else {
 			block.isactive = 0;
@@ -314,14 +314,12 @@ void moveBlock(int direction) { // 좌,우,아래 입력시 움직임 함수	Moving blocks f
 		}
 		else {
 			block2.isactive = 0;
-			for (int i = X - 1; block.isactive && i > 0; i--) {
-				if (gameScreen[i][block.pos_y] == 0) {
-					gameScreen[i][block.pos_y] = block.num;
-					gameScreen[block.pos_x][block.pos_y] = 0;
-					block.pos_x = i;
-					block.isactive = 0;
+			for (int i = block.pos_x + 1; i < X; i++) {
+				if (gameScreen[i][block.pos_y] != 0)
 					break;
-				}
+
+				gameScreen[i - 1][block.pos_y] = gameScreen[block.pos_x][block.pos_y];
+				gameScreen[block.pos_x][block.pos_y] = 0;
 			}
 		}
 	}
