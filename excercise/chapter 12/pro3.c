@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,13 +22,13 @@ int isEmpty(QueueNodePtr headPtr) {
 
 void printQueue(QueueNodePtr currentPtr) {
 	if (isEmpty(currentPtr)) {
-		printf("Queue is empty. \n\n");
+		printf("Queue is empty\n\n");
 	}
 	else {
 		printf("The queue is : \n");
 
 		while (currentPtr != NULL) {
-			printf(" %c --> ", currentPtr->data);
+			printf("%c --> ", currentPtr->data);
 			currentPtr = currentPtr->nextPtr;
 		}
 		printf("NULL \n\n");
@@ -36,9 +37,9 @@ void printQueue(QueueNodePtr currentPtr) {
 
 void instructions() {
 	printf("Enter your choice : \n");
-	printf("\t 1 to to push a value on the stack. \n");
-	printf("\t 2 to to pop a value off the stack. \n");
-	printf("\t 3 to end program. \n");
+	printf("\t 1 to add an item on the queue. \n");
+	printf("\t 2 to remove an item from the queue. \n");
+	printf("\t 3 to end\n");
 }
 
 void enqueue(QueueNodePtr* headPtr, QueueNodePtr* tailPtr, char value) {
@@ -93,7 +94,7 @@ void main() {
 			while (!getchar());
 			if (!isEmpty(headPtr)) {
 				item = dequeue(&headPtr, &tailPtr);
-				printf("The popped value is %c. \n", item);
+				printf("%c has been dequeued \n", item);
 			}
 			printQueue(headPtr);
 			break;

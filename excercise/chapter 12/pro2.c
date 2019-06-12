@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,8 +37,8 @@ void printStack(StackNodePtr currentPtr) {
 
 void instructions() {
 	printf("Enter your choice : \n");
-	printf("\t 1 to to push a value on the stack. \n");
-	printf("\t 2 to to pop a value off the stack. \n");
+	printf("\t 1 to push a value on the stack. \n");
+	printf("\t 2 to pop a value off the stack. \n");
 	printf("\t 3 to end program. \n");
 }
 
@@ -74,7 +75,7 @@ void main() {
 		switch (choice) {
 		case 1:
 			while (!getchar());
-			printf("Enter a integer: ");
+			printf("Enter an integer: ");
 			scanf("%d", &value);
 			push(&stackPtr, value);
 			printStack(stackPtr);
@@ -84,8 +85,8 @@ void main() {
 			while (!getchar());
 			if (!isEmpty(stackPtr)) {
 				printf("The popped value is %d. \n", pop(&stackPtr));
+				printStack(stackPtr);
 			}
-			printStack(stackPtr);
 			break;
 
 		default:
