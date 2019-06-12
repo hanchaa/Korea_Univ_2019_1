@@ -83,7 +83,7 @@ void main() {
 	int cnt = 0;
 
 	while (1) {
-
+		printGameScreen();
 		for (int j = 0; j < 5; j++) {
 			if (takeBlockControl(&cnt) == SPACE) break;
 			printGameScreen();
@@ -211,6 +211,7 @@ int takeBlockControl(int *cnt) {
 
 					score += 5;
 				}
+				while (_kbhit()) _getch(); //키버퍼를 비움. Emptying key buffer.
 				return SPACE;
 
 			case P:
@@ -428,7 +429,7 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 				(*ptr)++;
 			gameScreen[x][y - 1] = 0;
 
-			for (int i = x; i > 1; i--)
+			for (int i = x; i > 0; i--)
 				gameScreen[i][y - 1] = gameScreen[i - 1][y - 1];
 			gameScreen[0][y - 1] = 0;
 		}
@@ -446,6 +447,10 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 				(*ptr)++;
 			gameScreen[x + 1][y] = 0;
 		}
+
+		for (int i = x; i > 1; i--)
+			gameScreen[i][y] = gameScreen[i - 2][y];
+		gameScreen[0][y] = gameScreen[1][y] = 0;
 	}
 
 	if (z == 2 && x < 7 && x > 0 && gameScreen[x - 1][y] != 0 && gameScreen[x][y] == '-' && gameScreen[x + 1][y] != 0 && gameScreen[x - 1][y] % 2 == 0 && gameScreen[x + 1][y] % 2 == 0) {
@@ -462,6 +467,12 @@ int checkAdjacentBlock(int x, int y, int z, int *ptr) { //Merging 조건 확인 함수
 				(*ptr)++;
 			gameScreen[x + 1][y] = 0;
 		}
+
+		for (int i = x; i > 1; i--)
+			gameScreen[i][y] = gameScreen[i - 2][y];
+		gameScreen[0][y] = gameScreen[1][y] = 0;
+
+
 	}
 
 	return res; //example value. 0 for none, 1 for mergable.  예시값. 0이면 합칠 블록이 없고, 1이면 있음.
