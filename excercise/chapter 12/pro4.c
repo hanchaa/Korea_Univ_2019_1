@@ -4,40 +4,38 @@
 
 struct treeNode {
 	int data;
-	struct treeNode *leftPtr;
-	struct treeNode *rightPtr;
+	struct treeNode* leftPtr;
+	struct treeNode* rightPtr;
 };
 
 typedef struct treeNode TreeNode;
-typedef TreeNode *TreeNodePtr;
+typedef TreeNode* TreeNodePtr;
 
-void insertNode(TreeNodePtr *treePtr, int value);
+void insertNode(TreeNodePtr* treePtr, int value);
 void inOrder(TreeNodePtr treePtr);
 void preOrder(TreeNodePtr treePtr);
 void postOrder(TreeNodePtr treePtr);
 
-void insertNode(TreeNodePtr *treePtr, int value) {
-	TreeNodePtr newPtr = malloc(sizeof(TreeNode));
+void insertNode(TreeNodePtr* treePtr, int value) {
+	if (*treePtr == NULL) {
+		*treePtr = malloc(sizeof(TreeNode));
 
-	if (newPtr != NULL) {
-		newPtr->data = value;
-		newPtr->leftPtr = newPtr->rightPtr = NULL;
-
-		if (*treePtr == NULL)
-			*treePtr = newPtr;
-
+		if (*treePtr != NULL) {
+			(*treePtr)->data = value;
+			(*treePtr)->leftPtr = (*treePtr)->rightPtr = NULL;
+		}
 		else {
-			if (value < (*treePtr)->data)
-				insertNode(&((*treePtr)->leftPtr), value);
-			else if (value > (*treePtr)->data)
-				insertNode(&((*treePtr)->rightPtr), value);
-			else
-				printf("dup");
+			printf("%d not inserted. No memory available.\n", value);
 		}
 	}
 
 	else {
-		printf("%d not inserted. No memory available.\n", value);
+		if (value < (*treePtr)->data)
+			insertNode(&((*treePtr)->leftPtr), value);
+		else if (value > (*treePtr)->data)
+			insertNode(&((*treePtr)->rightPtr), value);
+		else
+			printf("dup");
 	}
 }
 
@@ -86,3 +84,4 @@ void main() {
 	printf("\n\nThe postorder traversal is:\n");
 	postOrder(rootPtr);
 }
+
