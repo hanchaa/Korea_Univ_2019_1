@@ -550,6 +550,8 @@ int isStageEnd(int *cnt) { // 스테이지가 끝났는지 체크      Checking if stage en
 		for (int j = 0; j < Y; j++) {
 			if (score >= goal) {
 				currentStage < 6 ? printEndScreen(1) : printEndScreen(2);
+				if (currentStage == 6)
+					* cnt = 0;
 				return 1;
 			}
 		}
