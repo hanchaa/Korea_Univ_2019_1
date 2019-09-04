@@ -1,3 +1,3 @@
-Korea Univ Programming I
+##Korea Univ COSE101
 
-Korea University Programming I class excercise source codes
+Korea University Computer Programming I class excercise source codes
